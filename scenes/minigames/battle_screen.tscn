@@ -1,0 +1,339 @@
+[gd_scene load_steps=12 format=3 uid="uid://c6u7vyq82npl1"]
+
+[ext_resource type="Script" path="res://scripts/ui/battle_screen.gd" id="1_battle"]
+[ext_resource type="Texture2D" path="res://assets/sprites/props/battle_bg_warkop.png" id="2_bg"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/player_emak_battle.png" id="3_player_tex"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/maling_jemuran.png" id="4_enemy_tex"]
+[ext_resource type="Texture2D" path="res://assets/ui/icon_serang.png" id="5_ic_serang"]
+[ext_resource type="Texture2D" path="res://assets/ui/icon_mp.png" id="6_ic_mp"]
+[ext_resource type="Texture2D" path="res://assets/ui/icon_bakpia.png" id="7_ic_bakpia"]
+[ext_resource type="Texture2D" path="res://assets/ui/icon_geprek.png" id="8_ic_geprek"]
+[ext_resource type="Texture2D" path="res://assets/ui/icon_mercon.png" id="9_ic_mercon"]
+[ext_resource type="Texture2D" path="res://assets/ui/icon_mundur.png" id="10_ic_mundur"]
+[ext_resource type="Texture2D" path="res://assets/ui/icon_lewati.png" id="11_ic_lewati"]
+
+[node name="BattleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_battle")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+
+[node name="TopLeftHUD" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 10.0
+offset_right = 140.0
+offset_bottom = 75.0
+
+[node name="VBoxHUD" type="VBoxContainer" parent="TopLeftHUD"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="BarHP" type="ProgressBar" parent="TopLeftHUD/VBoxHUD"]
+modulate = Color(0.9, 0.2, 0.2, 1)
+custom_minimum_size = Vector2(110, 14)
+layout_mode = 2
+value = 39.0
+show_percentage = false
+
+[node name="LabelPrefix" type="Label" parent="TopLeftHUD/VBoxHUD/BarHP"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = -2.0
+offset_right = 30.0
+offset_bottom = 14.0
+theme_override_font_sizes/font_size = 10
+text = "HP"
+
+[node name="LabelVal" type="Label" parent="TopLeftHUD/VBoxHUD/BarHP"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -45.0
+offset_top = -8.0
+offset_right = -4.0
+offset_bottom = 8.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 10
+text = "39/40"
+horizontal_alignment = 2
+
+[node name="BarMP" type="ProgressBar" parent="TopLeftHUD/VBoxHUD"]
+modulate = Color(0.2, 0.6, 0.9, 1)
+custom_minimum_size = Vector2(110, 14)
+layout_mode = 2
+value = 20.0
+show_percentage = false
+
+[node name="LabelPrefix" type="Label" parent="TopLeftHUD/VBoxHUD/BarMP"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = -2.0
+offset_right = 30.0
+offset_bottom = 14.0
+theme_override_font_sizes/font_size = 10
+text = "MP"
+
+[node name="LabelVal" type="Label" parent="TopLeftHUD/VBoxHUD/BarMP"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -45.0
+offset_top = -8.0
+offset_right = -4.0
+offset_bottom = 8.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 10
+text = "20/20"
+horizontal_alignment = 2
+
+[node name="BarLV" type="ProgressBar" parent="TopLeftHUD/VBoxHUD"]
+modulate = Color(0.2, 0.8, 0.3, 1)
+custom_minimum_size = Vector2(110, 12)
+layout_mode = 2
+value = 40.0
+show_percentage = false
+
+[node name="LabelPrefix" type="Label" parent="TopLeftHUD/VBoxHUD/BarLV"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = -3.0
+offset_right = 30.0
+offset_bottom = 13.0
+theme_override_font_sizes/font_size = 9
+text = "Lv 1"
+
+[node name="LabelVal" type="Label" parent="TopLeftHUD/VBoxHUD/BarLV"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -45.0
+offset_top = -8.0
+offset_right = -4.0
+offset_bottom = 8.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 9
+text = "40/50"
+horizontal_alignment = 2
+
+[node name="VBoxCenter" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 18.0
+offset_right = 200.0
+offset_bottom = 80.0
+grow_horizontal = 2
+theme_override_constants/separation = 4
+
+[node name="LabelTitle" type="Label" parent="VBoxCenter"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Battle"
+horizontal_alignment = 1
+
+[node name="LabelTurn" type="Label" parent="VBoxCenter"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.6, 1)
+theme_override_font_sizes/font_size = 12
+text = "Giliran You"
+horizontal_alignment = 1
+
+[node name="LabelLog" type="Label" parent="VBoxCenter"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "You menyerang Maling Jemuran (7)."
+horizontal_alignment = 1
+
+[node name="Arena" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayerNode" type="Node2D" parent="Arena"]
+position = Vector2(170, 5)
+
+[node name="PlayerSprite" type="Sprite2D" parent="Arena/PlayerNode"]
+texture = ExtResource("3_player_tex")
+
+[node name="LabelYou" type="Label" parent="Arena/PlayerNode"]
+offset_left = -20.0
+offset_top = 34.0
+offset_right = 20.0
+offset_bottom = 48.0
+theme_override_colors/font_color = Color(1, 0.85, 0.4, 1)
+theme_override_font_sizes/font_size = 10
+text = "You"
+horizontal_alignment = 1
+
+[node name="BarPlayerHP" type="ProgressBar" parent="Arena/PlayerNode"]
+modulate = Color(0.9, 0.2, 0.2, 1)
+offset_left = -30.0
+offset_top = 48.0
+offset_right = 30.0
+offset_bottom = 54.0
+value = 39.0
+show_percentage = false
+
+[node name="LabelPlayerHPVal" type="Label" parent="Arena/PlayerNode"]
+offset_left = -30.0
+offset_top = 54.0
+offset_right = 30.0
+offset_bottom = 66.0
+theme_override_font_sizes/font_size = 8
+text = "39/40"
+horizontal_alignment = 1
+
+[node name="EnemyNode" type="Node2D" parent="Arena"]
+position = Vector2(310, 5)
+
+[node name="EnemySprite" type="Sprite2D" parent="Arena/EnemyNode"]
+texture = ExtResource("4_enemy_tex")
+
+[node name="TargetArrow" type="Label" parent="Arena/EnemyNode"]
+offset_left = -6.0
+offset_top = -46.0
+offset_right = 6.0
+offset_bottom = -30.0
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+text = "▼"
+horizontal_alignment = 1
+
+[node name="LabelEnemyName" type="Label" parent="Arena/EnemyNode"]
+offset_left = -40.0
+offset_top = 34.0
+offset_right = 40.0
+offset_bottom = 48.0
+theme_override_colors/font_color = Color(0.9, 0.4, 0.4, 1)
+theme_override_font_sizes/font_size = 10
+text = "Maling Jemuran"
+horizontal_alignment = 1
+
+[node name="BarEnemyHP" type="ProgressBar" parent="Arena/EnemyNode"]
+modulate = Color(0.9, 0.2, 0.2, 1)
+offset_left = -25.0
+offset_top = 48.0
+offset_right = 25.0
+offset_bottom = 54.0
+value = 18.0
+show_percentage = false
+
+[node name="LabelEnemyHPVal" type="Label" parent="Arena/EnemyNode"]
+offset_left = -25.0
+offset_top = 54.0
+offset_right = 25.0
+offset_bottom = 66.0
+theme_override_font_sizes/font_size = 8
+text = "4/18"
+horizontal_alignment = 1
+
+[node name="BottomUI" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -105.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="CenterContainer" type="CenterContainer" parent="BottomUI"]
+layout_mode = 2
+
+[node name="VBoxActions" type="VBoxContainer" parent="BottomUI/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Row1" type="HBoxContainer" parent="BottomUI/CenterContainer/VBoxActions"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BtnSerang" type="TextureButton" parent="BottomUI/CenterContainer/VBoxActions/Row1"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+texture_normal = ExtResource("5_ic_serang")
+stretch_mode = 3
+
+[node name="BtnMP" type="TextureButton" parent="BottomUI/CenterContainer/VBoxActions/Row1"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+texture_normal = ExtResource("6_ic_mp")
+stretch_mode = 3
+
+[node name="BtnBakpia" type="TextureButton" parent="BottomUI/CenterContainer/VBoxActions/Row1"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+texture_normal = ExtResource("7_ic_bakpia")
+stretch_mode = 3
+
+[node name="BtnGeprek" type="TextureButton" parent="BottomUI/CenterContainer/VBoxActions/Row1"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+texture_normal = ExtResource("8_ic_geprek")
+stretch_mode = 3
+
+[node name="BtnMercon" type="TextureButton" parent="BottomUI/CenterContainer/VBoxActions/Row1"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+texture_normal = ExtResource("9_ic_mercon")
+stretch_mode = 3
+
+[node name="Row2" type="HBoxContainer" parent="BottomUI/CenterContainer/VBoxActions"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 8
+
+[node name="BtnMundur" type="TextureButton" parent="BottomUI/CenterContainer/VBoxActions/Row2"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+texture_normal = ExtResource("10_ic_mundur")
+stretch_mode = 3
+
+[node name="BtnLewati" type="TextureButton" parent="BottomUI/CenterContainer/VBoxActions/Row2"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+texture_normal = ExtResource("11_ic_lewati")
+stretch_mode = 3
+
+[node name="GridContainer" type="GridContainer" parent="BottomUI/CenterContainer"]
+visible = false
+layout_mode = 2
+
+[connection signal="pressed" from="BottomUI/CenterContainer/VBoxActions/Row1/BtnSerang" to="." method="_on_btn_serang_pressed"]
+[connection signal="pressed" from="BottomUI/CenterContainer/VBoxActions/Row1/BtnMP" to="." method="_on_btn_isi_mp_pressed"]
+[connection signal="pressed" from="BottomUI/CenterContainer/VBoxActions/Row1/BtnBakpia" to="." method="_on_btn_bakpia_pressed"]
+[connection signal="pressed" from="BottomUI/CenterContainer/VBoxActions/Row1/BtnGeprek" to="." method="_on_btn_geprek_pressed"]
+[connection signal="pressed" from="BottomUI/CenterContainer/VBoxActions/Row1/BtnMercon" to="." method="_on_btn_mercon_pressed"]
+[connection signal="pressed" from="BottomUI/CenterContainer/VBoxActions/Row2/BtnMundur" to="." method="_on_btn_mundur_pressed"]
+[connection signal="pressed" from="BottomUI/CenterContainer/VBoxActions/Row2/BtnLewati" to="." method="_on_btn_lewati_pressed"]

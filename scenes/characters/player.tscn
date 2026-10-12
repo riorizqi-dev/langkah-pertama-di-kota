@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://bvyqk58s1p0pl"]
+
+[ext_resource type="Script" path="res://scripts/characters/player.gd" id="1_player"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/joko_idle.png" id="2_joko_tex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_col"]
+size = Vector2(12, 6)
+
+[node name="Player" type="CharacterBody2D"]
+y_sort_enabled = true
+collision_mask = 3
+script = ExtResource("1_player")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_joko_tex")
+offset = Vector2(0, -12)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_col")
+
+[node name="InteractionRay" type="RayCast2D" parent="."]
+position = Vector2(0, -4)
+target_position = Vector2(0, 24)
+collision_mask = 2
+collide_with_areas = true
+collide_with_bodies = true

@@ -1,0 +1,106 @@
+[gd_scene load_steps=13 format=3 uid="uid://cwh1c7k4m029q"]
+
+[ext_resource type="Script" path="res://scripts/characters/street_gang.gd" id="1_gang"]
+[ext_resource type="PackedScene" uid="uid://bvyqk58s1p0pl" path="res://scenes/characters/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" uid="uid://cxupw3pvh3r7v" path="res://scenes/ui/hud.tscn" id="3_hud"]
+[ext_resource type="PackedScene" uid="uid://bvyg75m4f128q" path="res://scenes/ui/dialogue_box.tscn" id="4_dlg"]
+[ext_resource type="PackedScene" uid="uid://cih8w0k0y01q" path="res://scenes/ui/interactable_area.tscn" id="5_interact"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/bu_wati.png" id="6_buwati_tex"]
+[ext_resource type="Texture2D" path="res://assets/sprites/props/gerobak_warkop.png" id="7_warkop_tex"]
+[ext_resource type="Texture2D" path="res://assets/sprites/props/light_cookie.png" id="8_light_cookie"]
+[ext_resource type="Texture2D" path="res://assets/tilesets/town_tilemap.png" id="9_town_tiles"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_npc"]
+size = Vector2(20, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_warkop"]
+size = Vector2(44, 32)
+
+[sub_resource type="Gradient" id="Gradient_steam"]
+colors = PackedColorArray(1, 1, 1, 0.6, 1, 1, 1, 0)
+
+[node name="StreetGang" type="Node2D"]
+script = ExtResource("1_gang")
+
+[node name="CanvasModulateSore" type="CanvasModulate" parent="."]
+color = Color(0.72, 0.68, 0.78, 1)
+
+[node name="TownTileSprite" type="Sprite2D" parent="."]
+position = Vector2(0, -20)
+texture = ExtResource("9_town_tiles")
+region_enabled = true
+region_rect = Rect2(0, 0, 480, 270)
+
+[node name="YSortNodes" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="DoorBack" parent="YSortNodes" instance=ExtResource("5_interact")]
+position = Vector2(-180, -40)
+
+[node name="CollisionShape2D" parent="YSortNodes/DoorBack" index="0"]
+shape = SubResource("RectangleShape2D_npc")
+
+[node name="BuWatiNPC" parent="YSortNodes" instance=ExtResource("5_interact")]
+position = Vector2(-70, -20)
+
+[node name="Sprite2D" type="Sprite2D" parent="YSortNodes/BuWatiNPC"]
+texture = ExtResource("6_buwati_tex")
+offset = Vector2(0, -12)
+
+[node name="CollisionShape2D" parent="YSortNodes/BuWatiNPC" index="0"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_npc")
+
+[node name="WarkopGerobak" parent="YSortNodes" instance=ExtResource("5_interact")]
+position = Vector2(120, -10)
+
+[node name="Sprite2D" type="Sprite2D" parent="YSortNodes/WarkopGerobak"]
+texture = ExtResource("7_warkop_tex")
+offset = Vector2(0, -14)
+
+[node name="CollisionShape2D" parent="YSortNodes/WarkopGerobak" index="0"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_warkop")
+
+[node name="LampuWarkop" type="PointLight2D" parent="YSortNodes/WarkopGerobak"]
+position = Vector2(0, -20)
+color = Color(1, 0.75, 0.35, 1)
+energy = 1.6
+texture = ExtResource("8_light_cookie")
+texture_scale = 0.5
+
+[node name="SteamKopi" type="CPUParticles2D" parent="YSortNodes/WarkopGerobak"]
+position = Vector2(-12, -22)
+amount = 8
+lifetime = 1.4
+direction = Vector2(0, -1)
+spread = 20.0
+gravity = Vector2(0, -8)
+initial_velocity_min = 10.0
+initial_velocity_max = 15.0
+color_ramp = SubResource("Gradient_steam")
+
+[node name="LampuJalan" type="PointLight2D" parent="YSortNodes"]
+position = Vector2(-140, -50)
+color = Color(1, 0.8, 0.45, 1)
+energy = 1.2
+texture = ExtResource("8_light_cookie")
+texture_scale = 0.7
+
+[node name="Player" parent="YSortNodes" instance=ExtResource("2_player")]
+position = Vector2(-120, -20)
+
+[node name="Camera2D" type="Camera2D" parent="YSortNodes/Player"]
+zoom = Vector2(1.8, 1.8)
+
+[node name="HUD" parent="." instance=ExtResource("3_hud")]
+
+[node name="DialogueBox" parent="." instance=ExtResource("4_dlg")]
+
+[connection signal="on_interacted" from="YSortNodes/DoorBack" to="." method="_on_door_back_interacted"]
+[connection signal="on_interacted" from="YSortNodes/BuWatiNPC" to="." method="_on_bu_wati_interacted"]
+[connection signal="on_interacted" from="YSortNodes/WarkopGerobak" to="." method="_on_warkop_interacted"]
+
+[editable path="YSortNodes/DoorBack"]
+[editable path="YSortNodes/BuWatiNPC"]
+[editable path="YSortNodes/WarkopGerobak"]
