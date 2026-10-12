@@ -1,78 +1,181 @@
 extends Control
 
-## Main Menu Controller - Langkah Pertama di Kota
-## Mengelola navigasi menu utama, modal pengaturan, modal panduan, dan transisi layar.
+## Main Menu Controller - Langkah Pertama di Kota (Gaya Citampi Stories / Stardew Valley)
+## Hanya 4 tombol utama: Mulai Baru, Lanjutkan, Pengaturan, Keluar.
+## Mendukung navigasi Keyboard (W/S/Panah + Enter) dan Mouse + SFX klik + BGM.
 
-@onready var btn_start: Button = $MainLayout/LeftColumn/MenuCard/Margin/VBoxButtons/BtnStart
-@onready var btn_battle: Button = $MainLayout/LeftColumn/MenuCard/Margin/VBoxButtons/BtnBattle
-@onready var btn_guide: Button = $MainLayout/LeftColumn/MenuCard/Margin/VBoxButtons/BtnGuide
-@onready var btn_settings: Button = $MainLayout/LeftColumn/MenuCard/Margin/VBoxButtons/BtnSettings
-@onready var btn_exit: Button = $MainLayout/LeftColumn/MenuCard/Margin/VBoxButtons/BtnExit
+const URBAN_TILES_PATH: String = "res://assets/tilesets/kenney_urban_16x16.png"
 
-@onready var modal_settings: PanelContainer = $ModalOverlay/ModalSettings
-@onready var modal_guide: PanelContainer = $ModalOverlay/ModalGuide
-@onready var modal_overlay: ColorRect = $ModalOverlay
-@onready var fade_rect: ColorRect = $FadeLayer/FadeRect
-@onready var check_fullscreen: CheckButton = $ModalOverlay/ModalSettings/Margin/VBox/HBoxFullscreen/CheckFullscreen
+@onready var night_street_map: TileMapLayer = $BackgroundScene/NightStreetMap
+@onready var btn_start: Button = $ButtonsVBox/BtnStart
+@onready var btn_continue: Button = $ButtonsVBox/BtnContinue
+@onready var btn_settings: Button = $ButtonsVBox/BtnSettings
+@onready var btn_exit: Button = $ButtonsVBox/BtnExit
+@onready var modal_settings: PanelContainer = $ModalSettings
+@onready var check_fullscreen: CheckButton = $ModalSettings/VBox/HBoxFullscreen/CheckFullscreen
+@onready var btn_close_settings: Button = $ModalSettings/VBox/BtnCloseSettings
+@onready var bgm_player: AudioStreamPlayer = $BGMPlayer
+@onready var sfx_player: AudioStreamPlayer = $SFXPlayer
+@onready var fade_sprite: Sprite2D = $FadeLayer/FadeSprite
+
+var _is_ready_sfx: bool = false
+
+func _exit_tree() -> void:
+	if bgm_player:
+		bgm_player.stop()
+		bgm_player.stream = null
+	if sfx_player:
+		sfx_player.stop()
+		sfx_player.stream = null
 
 func _ready() -> void:
-	modal_overlay.visible = false
 	modal_settings.visible = false
-	modal_guide.visible = false
+	_build_night_street_tilemap()
+	_setup_button_navigation()
+	if DisplayServer.get_name() != "headless" and bgm_player:
+		bgm_player.play()
 	
-	# Animasi Fade-In halus saat masuk Main Menu
-	fade_rect.color = Color(0, 0, 0, 1)
-	fade_rect.visible = true
+	# Fade-in halus saat menu dibuka
+	fade_sprite.modulate = Color(0, 0, 0, 1)
+	fade_sprite.visible = true
 	var tw: Tween = create_tween()
-	tw.tween_property(fade_rect, "color:a", 0.0, 0.5)
-	tw.tween_callback(func(): fade_rect.visible = false)
+	tw.tween_property(fade_sprite, "modulate:a", 0.0, 0.45)
+	tw.tween_callback(fade_sprite.hide)
 	
 	btn_start.grab_focus()
+	_is_ready_sfx = true
+
+func _build_night_street_tilemap() -> void:
+	var ts := TileSet.new()
+	ts.tile_size = Vector2i(16, 16)
+	var src := TileSetAtlasSource.new()
+	src.texture = load(URBAN_TILES_PATH)
+	src.texture_region_size = Vector2i(16, 16)
+	ts.add_source(src, 0)
+	
+	# Daftarkan semua tile 27x18 di atlas
+	for tx in range(27):
+		for ty in range(18):
+			src.create_tile(Vector2i(tx, ty))
+			
+	night_street_map.tile_set = ts
+	night_street_map.modulate = Color(0.82, 0.85, 0.96, 1.0)
+	
+	var deco_layer := TileMapLayer.new()
+	deco_layer.tile_set = ts
+	night_street_map.add_child(deco_layer)
+	
+	# Bangunan kiri (x = 0..5, y = 6..8) - Bata Merah
+	for x in range(0, 6):
+		night_street_map.set_cell(Vector2i(x, 6), 0, Vector2i(18, 0)) # Atap
+		night_street_map.set_cell(Vector2i(x, 7), 0, Vector2i(18, 2)) # Dinding bata merah murni
+		night_street_map.set_cell(Vector2i(x, 8), 0, Vector2i(18, 3)) # Dinding bawah
+	deco_layer.set_cell(Vector2i(1, 7), 0, Vector2i(11, 13)) # Jendela kiri di atas bata
+	deco_layer.set_cell(Vector2i(4, 7), 0, Vector2i(11, 13)) # Jendela kanan di atas bata
+	deco_layer.set_cell(Vector2i(2, 8), 0, Vector2i(13, 10)) # Pintu kayu kos
+	
+	# Bangunan kanan (x = 14..19, y = 5..8) - Bata Cokelat
+	for x in range(14, 20):
+		night_street_map.set_cell(Vector2i(x, 5), 0, Vector2i(18, 4)) # Atap ruko
+		night_street_map.set_cell(Vector2i(x, 6), 0, Vector2i(18, 6)) # Dinding bata cokelat murni
+		night_street_map.set_cell(Vector2i(x, 7), 0, Vector2i(18, 6))
+		night_street_map.set_cell(Vector2i(x, 8), 0, Vector2i(18, 7))
+	deco_layer.set_cell(Vector2i(15, 6), 0, Vector2i(12, 13))
+	deco_layer.set_cell(Vector2i(18, 6), 0, Vector2i(12, 13))
+	deco_layer.set_cell(Vector2i(16, 8), 0, Vector2i(14, 10))
+	
+	# Trotoar (y = 9) dan jalan aspal malam (y = 10..11)
+	for x in range(20):
+		night_street_map.set_cell(Vector2i(x, 9), 0, Vector2i(9, 4))
+		night_street_map.set_cell(Vector2i(x, 10), 0, Vector2i(1, 15))
+		night_street_map.set_cell(Vector2i(x, 11), 0, Vector2i(1, 16))
+		
+	# Lampu jalan di atas dinding bata
+	deco_layer.set_cell(Vector2i(3, 7), 0, Vector2i(2, 6))
+	deco_layer.set_cell(Vector2i(3, 8), 0, Vector2i(2, 7))
+	deco_layer.set_cell(Vector2i(17, 7), 0, Vector2i(2, 6))
+	deco_layer.set_cell(Vector2i(17, 8), 0, Vector2i(2, 7))
+
+func _setup_button_navigation() -> void:
+	var buttons: Array[Button] = [btn_start, btn_continue, btn_settings, btn_exit]
+	for i in range(buttons.size()):
+		var b: Button = buttons[i]
+		var prev_btn: Button = buttons[(i - 1 + buttons.size()) % buttons.size()]
+		var next_btn: Button = buttons[(i + 1) % buttons.size()]
+		b.focus_neighbor_top = b.get_path_to(prev_btn)
+		b.focus_neighbor_bottom = b.get_path_to(next_btn)
+		b.focus_entered.connect(_play_click_sfx)
+		b.mouse_entered.connect(_on_button_mouse_entered.bind(b))
+
+func _on_button_mouse_entered(b: Button) -> void:
+	if not modal_settings.visible:
+		b.grab_focus()
+
+func _unhandled_input(event: InputEvent) -> void:
+	if modal_settings.visible:
+		if event.is_action_pressed("ui_cancel"):
+			_on_btn_close_modal_pressed()
+		return
+	if event.is_action_pressed("move_up"):
+		var f := get_viewport().gui_get_focus_owner()
+		if f and f.focus_neighbor_top:
+			var target := f.get_node_or_null(f.focus_neighbor_top) as Control
+			if target:
+				target.grab_focus()
+				get_viewport().set_input_as_handled()
+	elif event.is_action_pressed("move_down"):
+		var f := get_viewport().gui_get_focus_owner()
+		if f and f.focus_neighbor_bottom:
+			var target := f.get_node_or_null(f.focus_neighbor_bottom) as Control
+			if target:
+				target.grab_focus()
+				get_viewport().set_input_as_handled()
+
+func _play_click_sfx() -> void:
+	if _is_ready_sfx and sfx_player:
+		sfx_player.play()
 
 func _transition_to_scene(scene_path: String) -> void:
-	fade_rect.visible = true
-	fade_rect.color = Color(0, 0, 0, 0)
+	_play_click_sfx()
+	fade_sprite.visible = true
+	fade_sprite.modulate = Color(0, 0, 0, 0)
 	var tw: Tween = create_tween()
-	tw.tween_property(fade_rect, "color:a", 1.0, 0.35)
+	tw.tween_property(fade_sprite, "modulate:a", 1.0, 0.35)
 	tw.tween_callback(func():
 		get_tree().change_scene_to_file(scene_path)
 	)
 
 func _on_btn_start_pressed() -> void:
-	# Reset status awal permainan baru
 	GameState.money = 50000
 	GameState.energy = 100
 	GameState.hunger = 80
 	GameState.stress = 20
 	GameState.current_day = 1
 	GameState.current_time_index = 0
+	GameState.story_flags.clear()
 	_transition_to_scene("res://scenes/maps/room_kost.tscn")
 
-func _on_btn_battle_pressed() -> void:
-	_transition_to_scene("res://scenes/minigames/battle_screen.tscn")
-
-func _on_btn_guide_pressed() -> void:
-	modal_overlay.visible = true
-	modal_guide.visible = true
-	modal_settings.visible = false
+func _on_btn_continue_pressed() -> void:
+	_transition_to_scene("res://scenes/maps/room_kost.tscn")
 
 func _on_btn_settings_pressed() -> void:
-	modal_overlay.visible = true
+	_play_click_sfx()
 	modal_settings.visible = true
-	modal_guide.visible = false
 	check_fullscreen.button_pressed = (DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN)
+	btn_close_settings.grab_focus()
 
 func _on_btn_close_modal_pressed() -> void:
-	modal_overlay.visible = false
+	_play_click_sfx()
 	modal_settings.visible = false
-	modal_guide.visible = false
-	btn_start.grab_focus()
+	btn_settings.grab_focus()
 
 func _on_check_fullscreen_toggled(toggled_on: bool) -> void:
+	_play_click_sfx()
 	if toggled_on:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 
 func _on_btn_exit_pressed() -> void:
+	_play_click_sfx()
 	get_tree().quit()

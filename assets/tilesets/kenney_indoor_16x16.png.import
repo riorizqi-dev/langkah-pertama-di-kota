@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dqlqxwwqa5tl5"
-path="res://.godot/imported/icon_mercon.png-dfbec3613b4fe8cb22c8a74e38781c14.ctex"
+uid="uid://dcxdserqu04lu"
+path="res://.godot/imported/kenney_indoor_16x16.png-306590ac6a5cc63af41a828010438d9c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/icon_mercon.png"
-dest_files=["res://.godot/imported/icon_mercon.png-dfbec3613b4fe8cb22c8a74e38781c14.ctex"]
+source_file="res://assets/tilesets/kenney_indoor_16x16.png"
+dest_files=["res://.godot/imported/kenney_indoor_16x16.png-306590ac6a5cc63af41a828010438d9c.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cefe0s8fp3uhy"
-path="res://.godot/imported/icon_geprek.png-73c1f3a8c797cedb15dfb7c2c1c5c3d3.ctex"
+uid="uid://fei6yhyj0jr6"
+path="res://.godot/imported/kenney_ui_rpg.png-1619fb6c957ede6dcc7da2d26467afb8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/icon_geprek.png"
-dest_files=["res://.godot/imported/icon_geprek.png-73c1f3a8c797cedb15dfb7c2c1c5c3d3.ctex"]
+source_file="res://assets/ui/kenney_ui_rpg.png"
+dest_files=["res://.godot/imported/kenney_ui_rpg.png-1619fb6c957ede6dcc7da2d26467afb8.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://0t5e6pr4eqvd"
-path="res://.godot/imported/kardus_tas.png-e32aa9d832e1b4a1f2e653b05d91615b.ctex"
+uid="uid://dx7gua1toyngm"
+path="res://.godot/imported/city_bg_front.png-899db6ff5b24c2bfb762ac6bcef368f2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/props/kardus_tas.png"
-dest_files=["res://.godot/imported/kardus_tas.png-e32aa9d832e1b4a1f2e653b05d91615b.ctex"]
+source_file="res://assets/sprites/props/city_bg_front.png"
+dest_files=["res://.godot/imported/city_bg_front.png-899db6ff5b24c2bfb762ac6bcef368f2.ctex"]
 
 [params]
 

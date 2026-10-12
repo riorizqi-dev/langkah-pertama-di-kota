@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://jxn2olmesygi"
-path="res://.godot/imported/icon_bakpia.png-23d467cb80e4250a0c8d52afe0c23092.ctex"
+uid="uid://dol47ri8dqlu4"
+path="res://.godot/imported/city_bg_back.png-3aa1d7bb9b670627104673430c89dd12.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/icon_bakpia.png"
-dest_files=["res://.godot/imported/icon_bakpia.png-23d467cb80e4250a0c8d52afe0c23092.ctex"]
+source_file="res://assets/sprites/props/city_bg_back.png"
+dest_files=["res://.godot/imported/city_bg_back.png-3aa1d7bb9b670627104673430c89dd12.ctex"]
 
 [params]
 

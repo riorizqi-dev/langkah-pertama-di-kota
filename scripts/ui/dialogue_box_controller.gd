@@ -1,7 +1,7 @@
 extends CanvasLayer
 class_name DialogueBoxController
 
-## Controller sistem dialog dengan character portrait dan efek mengetik.
+## Controller sistem dialog dengan dukungan tombol E / Spasi / Enter.
 
 signal dialogue_finished
 
@@ -12,17 +12,25 @@ signal dialogue_finished
 
 var dialogue_queue: Array[Dictionary] = []
 var is_active: bool = false
+var _just_opened_frame: int = -1
 
 func _ready() -> void:
 	panel_container.visible = false
+	add_to_group("dialogue_box")
 
 func _unhandled_input(event: InputEvent) -> void:
-	if is_active and event.is_action_pressed("ui_accept"):
+	if not is_active:
+		return
+	if Engine.get_process_frames() == _just_opened_frame:
+		return
+	if event.is_action_pressed("ui_accept") or event.is_action_pressed("interact"):
+		get_viewport().set_input_as_handled()
 		advance_dialogue()
 
 func start_dialogue(dialogue_list: Array[Dictionary]) -> void:
 	dialogue_queue = dialogue_list.duplicate()
 	is_active = true
+	_just_opened_frame = Engine.get_process_frames()
 	panel_container.visible = true
 	advance_dialogue()
 
@@ -35,7 +43,6 @@ func advance_dialogue() -> void:
 	label_speaker.text = current.get("speaker", "")
 	label_text.text = current.get("text", "")
 	
-	# Ganti portrait jika ada path texture
 	var portrait_path: String = current.get("portrait", "")
 	if portrait_path != "" and ResourceLoader.exists(portrait_path):
 		portrait_rect.texture = load(portrait_path)

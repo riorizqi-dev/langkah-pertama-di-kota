@@ -1,97 +1,184 @@
-[gd_scene load_steps=13 format=3 uid="uid://cwh1c7k4m029q"]
+[gd_scene load_steps=15 format=3 uid="uid://cwh1c7k4m029q"]
 
 [ext_resource type="Script" path="res://scripts/characters/street_gang.gd" id="1_gang"]
 [ext_resource type="PackedScene" uid="uid://bvyqk58s1p0pl" path="res://scenes/characters/player.tscn" id="2_player"]
 [ext_resource type="PackedScene" uid="uid://cxupw3pvh3r7v" path="res://scenes/ui/hud.tscn" id="3_hud"]
 [ext_resource type="PackedScene" uid="uid://bvyg75m4f128q" path="res://scenes/ui/dialogue_box.tscn" id="4_dlg"]
 [ext_resource type="PackedScene" uid="uid://cih8w0k0y01q" path="res://scenes/ui/interactable_area.tscn" id="5_interact"]
-[ext_resource type="Texture2D" path="res://assets/sprites/characters/bu_wati.png" id="6_buwati_tex"]
-[ext_resource type="Texture2D" path="res://assets/sprites/props/gerobak_warkop.png" id="7_warkop_tex"]
-[ext_resource type="Texture2D" path="res://assets/sprites/props/light_cookie.png" id="8_light_cookie"]
-[ext_resource type="Texture2D" path="res://assets/tilesets/town_tilemap.png" id="9_town_tiles"]
+[ext_resource type="Texture2D" path="res://assets/tilesets/kenney_urban_16x16.png" id="6_urban"]
+[ext_resource type="Texture2D" path="res://assets/sprites/props/light_cookie.png" id="7_light_cookie"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_h"]
+size = Vector2(360, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_v"]
+size = Vector2(16, 180)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_npc"]
-size = Vector2(20, 28)
+size = Vector2(26, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_npc_solid"]
+size = Vector2(12, 10)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_warkop"]
-size = Vector2(44, 32)
+size = Vector2(54, 34)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_warkop_solid"]
+size = Vector2(44, 18)
 
 [sub_resource type="Gradient" id="Gradient_steam"]
-colors = PackedColorArray(1, 1, 1, 0.6, 1, 1, 1, 0)
+colors = PackedColorArray(1, 1, 1, 0.65, 1, 1, 1, 0)
 
 [node name="StreetGang" type="Node2D"]
 script = ExtResource("1_gang")
 
 [node name="CanvasModulateSore" type="CanvasModulate" parent="."]
-color = Color(0.72, 0.68, 0.78, 1)
+color = Color(0.86, 0.82, 0.88, 1)
 
-[node name="TownTileSprite" type="Sprite2D" parent="."]
-position = Vector2(0, -20)
-texture = ExtResource("9_town_tiles")
-region_enabled = true
-region_rect = Rect2(0, 0, 480, 270)
+[node name="StreetTileMap" type="TileMapLayer" parent="."]
+
+[node name="StaticBody2D_Walls" type="StaticBody2D" parent="."]
+
+[node name="WallTop" type="CollisionShape2D" parent="StaticBody2D_Walls"]
+position = Vector2(0, -24)
+shape = SubResource("RectangleShape2D_wall_h")
+
+[node name="WallBottom" type="CollisionShape2D" parent="StaticBody2D_Walls"]
+position = Vector2(0, 80)
+shape = SubResource("RectangleShape2D_wall_h")
+
+[node name="WallLeft" type="CollisionShape2D" parent="StaticBody2D_Walls"]
+position = Vector2(-168, 28)
+shape = SubResource("RectangleShape2D_wall_v")
+
+[node name="WallRight" type="CollisionShape2D" parent="StaticBody2D_Walls"]
+position = Vector2(168, 28)
+shape = SubResource("RectangleShape2D_wall_v")
 
 [node name="YSortNodes" type="Node2D" parent="."]
 y_sort_enabled = true
 
 [node name="DoorBack" parent="YSortNodes" instance=ExtResource("5_interact")]
-position = Vector2(-180, -40)
+position = Vector2(-104, -16)
+prompt_message = "Masuk Kamar Kos"
+
+[node name="Sprite2D" type="Sprite2D" parent="YSortNodes/DoorBack"]
+position = Vector2(0, -8)
+texture = ExtResource("6_urban")
+region_enabled = true
+region_rect = Rect2(208, 160, 16, 16)
 
 [node name="CollisionShape2D" parent="YSortNodes/DoorBack" index="0"]
+position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_npc")
 
 [node name="BuWatiNPC" parent="YSortNodes" instance=ExtResource("5_interact")]
-position = Vector2(-70, -20)
+position = Vector2(-40, 0)
+prompt_message = "Bicara: Bu Wati"
 
 [node name="Sprite2D" type="Sprite2D" parent="YSortNodes/BuWatiNPC"]
-texture = ExtResource("6_buwati_tex")
-offset = Vector2(0, -12)
+position = Vector2(0, -8)
+texture = ExtResource("6_urban")
+region_enabled = true
+region_rect = Rect2(384, 112, 16, 16)
 
 [node name="CollisionShape2D" parent="YSortNodes/BuWatiNPC" index="0"]
-position = Vector2(0, -6)
+position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_npc")
 
-[node name="WarkopGerobak" parent="YSortNodes" instance=ExtResource("5_interact")]
-position = Vector2(120, -10)
+[node name="StaticBody2D" type="StaticBody2D" parent="YSortNodes/BuWatiNPC"]
 
-[node name="Sprite2D" type="Sprite2D" parent="YSortNodes/WarkopGerobak"]
-texture = ExtResource("7_warkop_tex")
-offset = Vector2(0, -14)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSortNodes/BuWatiNPC/StaticBody2D"]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_npc_solid")
+
+[node name="WarkopGerobak" parent="YSortNodes" instance=ExtResource("5_interact")]
+position = Vector2(88, 0)
+prompt_message = "Warkop Cak Man"
+
+[node name="StallSprite" type="Sprite2D" parent="YSortNodes/WarkopGerobak"]
+position = Vector2(0, -12)
+texture = ExtResource("6_urban")
+region_enabled = true
+region_rect = Rect2(80, 128, 48, 32)
+
+[node name="CratesSprite" type="Sprite2D" parent="YSortNodes/WarkopGerobak"]
+position = Vector2(-36, -4)
+texture = ExtResource("6_urban")
+region_enabled = true
+region_rect = Rect2(96, 160, 32, 16)
+
+[node name="CakManSprite" type="Sprite2D" parent="YSortNodes/WarkopGerobak"]
+position = Vector2(0, -24)
+texture = ExtResource("6_urban")
+region_enabled = true
+region_rect = Rect2(384, 160, 16, 16)
 
 [node name="CollisionShape2D" parent="YSortNodes/WarkopGerobak" index="0"]
-position = Vector2(0, -8)
+position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_warkop")
 
+[node name="StaticBody2D" type="StaticBody2D" parent="YSortNodes/WarkopGerobak"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSortNodes/WarkopGerobak/StaticBody2D"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_warkop_solid")
+
 [node name="LampuWarkop" type="PointLight2D" parent="YSortNodes/WarkopGerobak"]
-position = Vector2(0, -20)
-color = Color(1, 0.75, 0.35, 1)
-energy = 1.6
-texture = ExtResource("8_light_cookie")
-texture_scale = 0.5
+position = Vector2(0, -16)
+color = Color(1, 0.78, 0.38, 1)
+energy = 0.28
+texture = ExtResource("7_light_cookie")
+texture_scale = 0.3
 
 [node name="SteamKopi" type="CPUParticles2D" parent="YSortNodes/WarkopGerobak"]
-position = Vector2(-12, -22)
-amount = 8
+position = Vector2(-8, -16)
+amount = 6
 lifetime = 1.4
 direction = Vector2(0, -1)
 spread = 20.0
-gravity = Vector2(0, -8)
-initial_velocity_min = 10.0
-initial_velocity_max = 15.0
+gravity = Vector2(0, -6)
+initial_velocity_min = 6.0
+initial_velocity_max = 12.0
 color_ramp = SubResource("Gradient_steam")
 
+[node name="StreetProps" type="Node2D" parent="YSortNodes"]
+
+[node name="JemuranGang" type="Sprite2D" parent="YSortNodes/StreetProps"]
+position = Vector2(-136, -4)
+texture = ExtResource("6_urban")
+region_enabled = true
+region_rect = Rect2(0, 128, 48, 32)
+
+[node name="LampPostLeft" type="Sprite2D" parent="YSortNodes/StreetProps"]
+position = Vector2(-72, -12)
+texture = ExtResource("6_urban")
+region_enabled = true
+region_rect = Rect2(32, 96, 16, 32)
+
+[node name="TreeRight" type="Sprite2D" parent="YSortNodes/StreetProps"]
+position = Vector2(136, -12)
+texture = ExtResource("6_urban")
+region_enabled = true
+region_rect = Rect2(256, 128, 16, 32)
+
 [node name="LampuJalan" type="PointLight2D" parent="YSortNodes"]
-position = Vector2(-140, -50)
-color = Color(1, 0.8, 0.45, 1)
-energy = 1.2
-texture = ExtResource("8_light_cookie")
-texture_scale = 0.7
+position = Vector2(-72, -20)
+color = Color(1, 0.82, 0.45, 1)
+energy = 0.25
+texture = ExtResource("7_light_cookie")
+texture_scale = 0.32
 
 [node name="Player" parent="YSortNodes" instance=ExtResource("2_player")]
-position = Vector2(-120, -20)
+position = Vector2(-104, 8)
 
 [node name="Camera2D" type="Camera2D" parent="YSortNodes/Player"]
-zoom = Vector2(1.8, 1.8)
+limit_left = -160
+limit_top = -90
+limit_right = 160
+limit_bottom = 90
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
 
 [node name="HUD" parent="." instance=ExtResource("3_hud")]
 

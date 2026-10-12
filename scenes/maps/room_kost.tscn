@@ -1,138 +1,220 @@
-[gd_scene load_steps=12 format=3 uid="uid://dpv1t7k64700n"]
+[gd_scene load_steps=16 format=3 uid="uid://dpv1t7k64700n"]
 
 [ext_resource type="Script" path="res://scripts/characters/room_kost.gd" id="1_room"]
 [ext_resource type="PackedScene" uid="uid://bvyqk58s1p0pl" path="res://scenes/characters/player.tscn" id="2_player"]
 [ext_resource type="PackedScene" uid="uid://cxupw3pvh3r7v" path="res://scenes/ui/hud.tscn" id="3_hud"]
 [ext_resource type="PackedScene" uid="uid://bvyg75m4f128q" path="res://scenes/ui/dialogue_box.tscn" id="4_dlg"]
 [ext_resource type="PackedScene" uid="uid://cih8w0k0y01q" path="res://scenes/ui/interactable_area.tscn" id="5_interact"]
-[ext_resource type="Texture2D" path="res://assets/sprites/props/kasur_kost.png" id="6_bed_tex"]
-[ext_resource type="Texture2D" path="res://assets/sprites/props/lemari_plastik.png" id="7_lemari_tex"]
-[ext_resource type="Texture2D" path="res://assets/sprites/props/kipas_angin.png" id="8_fan_tex"]
-[ext_resource type="Texture2D" path="res://assets/sprites/props/dispenser.png" id="9_disp_tex"]
-[ext_resource type="Texture2D" path="res://assets/sprites/props/kardus_tas.png" id="10_box_tex"]
-[ext_resource type="Texture2D" path="res://assets/sprites/props/pintu_kayu.png" id="11_door_tex"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bed"]
-size = Vector2(28, 44)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lemari"]
-size = Vector2(22, 32)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fan"]
-size = Vector2(16, 20)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_disp"]
-size = Vector2(16, 26)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
-size = Vector2(24, 36)
+[ext_resource type="Texture2D" path="res://assets/tilesets/kenney_urban_16x16.png" id="6_urban"]
+[ext_resource type="Texture2D" path="res://assets/tilesets/kenney_indoor_16x16.png" id="7_indoor"]
+[ext_resource type="Texture2D" path="res://assets/sprites/props/light_cookie.png" id="8_light"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_h"]
-size = Vector2(300, 16)
+size = Vector2(192, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_v"]
-size = Vector2(16, 140)
+size = Vector2(16, 144)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bed_interact"]
+size = Vector2(26, 38)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bed_solid"]
+size = Vector2(16, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_prop_interact"]
+size = Vector2(26, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_prop_solid"]
+size = Vector2(16, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
+size = Vector2(24, 24)
 
 [node name="RoomKost" type="Node2D"]
 script = ExtResource("1_room")
 
-[node name="ColorRectFloor" type="ColorRect" parent="."]
-offset_left = -140.0
-offset_top = -90.0
-offset_right = 140.0
-offset_bottom = 90.0
-color = Color(0.88, 0.84, 0.76, 1)
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.94, 0.91, 0.86, 1)
 
-[node name="ColorRectWall" type="ColorRect" parent="."]
-offset_left = -140.0
-offset_top = -90.0
-offset_right = 140.0
-offset_bottom = -30.0
-color = Color(0.22, 0.38, 0.35, 1)
+[node name="BackgroundLayer" type="TileMapLayer" parent="."]
+
+[node name="RoomTileMap" type="TileMapLayer" parent="."]
+
+[node name="RoomLight" type="PointLight2D" parent="."]
+position = Vector2(0, 0)
+color = Color(1, 0.9, 0.7, 1)
+energy = 0.22
+texture = ExtResource("8_light")
+texture_scale = 0.45
 
 [node name="StaticBody2D_Walls" type="StaticBody2D" parent="."]
 
 [node name="WallTop" type="CollisionShape2D" parent="StaticBody2D_Walls"]
-position = Vector2(0, -30)
+position = Vector2(0, -40)
 shape = SubResource("RectangleShape2D_wall_h")
 
 [node name="WallBottom" type="CollisionShape2D" parent="StaticBody2D_Walls"]
-position = Vector2(0, 90)
+position = Vector2(0, 72)
 shape = SubResource("RectangleShape2D_wall_h")
 
 [node name="WallLeft" type="CollisionShape2D" parent="StaticBody2D_Walls"]
-position = Vector2(-140, 30)
+position = Vector2(-88, 16)
 shape = SubResource("RectangleShape2D_wall_v")
 
 [node name="WallRight" type="CollisionShape2D" parent="StaticBody2D_Walls"]
-position = Vector2(140, 30)
+position = Vector2(88, 16)
 shape = SubResource("RectangleShape2D_wall_v")
 
 [node name="DoorInteractable" parent="." instance=ExtResource("5_interact")]
-position = Vector2(0, -36)
+position = Vector2(0, -32)
+prompt_message = "Keluar Kos"
 
 [node name="Sprite2D" type="Sprite2D" parent="DoorInteractable"]
-texture = ExtResource("11_door_tex")
+position = Vector2(0, -8)
+texture = ExtResource("6_urban")
+region_enabled = true
+region_rect = Rect2(208, 160, 16, 16)
 
 [node name="CollisionShape2D" parent="DoorInteractable" index="0"]
+position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_door")
 
 [node name="YSortNodes" type="Node2D" parent="."]
 y_sort_enabled = true
 
 [node name="BedInteractable" parent="YSortNodes" instance=ExtResource("5_interact")]
-position = Vector2(-80, 0)
+position = Vector2(-56, -8)
+prompt_message = "Tidur / Istirahat"
 
-[node name="Sprite2D" type="Sprite2D" parent="YSortNodes/BedInteractable"]
-texture = ExtResource("6_bed_tex")
-offset = Vector2(0, -6)
+[node name="RugSprite" type="Sprite2D" parent="YSortNodes/BedInteractable"]
+position = Vector2(16, 0)
+texture = ExtResource("7_indoor")
+region_enabled = true
+region_rect = Rect2(323, 255, 16, 16)
+
+[node name="BedTopSprite" type="Sprite2D" parent="YSortNodes/BedInteractable"]
+position = Vector2(0, -8)
+texture = ExtResource("7_indoor")
+region_enabled = true
+region_rect = Rect2(136, 102, 16, 16)
+
+[node name="BedBottomSprite" type="Sprite2D" parent="YSortNodes/BedInteractable"]
+position = Vector2(0, 8)
+texture = ExtResource("7_indoor")
+region_enabled = true
+region_rect = Rect2(136, 136, 16, 16)
 
 [node name="CollisionShape2D" parent="YSortNodes/BedInteractable" index="0"]
-position = Vector2(0, -6)
-shape = SubResource("RectangleShape2D_bed")
+position = Vector2(0, 0)
+shape = SubResource("RectangleShape2D_bed_interact")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="YSortNodes/BedInteractable"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSortNodes/BedInteractable/StaticBody2D"]
+position = Vector2(0, 0)
+shape = SubResource("RectangleShape2D_bed_solid")
 
 [node name="LemariInteractable" parent="YSortNodes" instance=ExtResource("5_interact")]
-position = Vector2(70, -20)
+position = Vector2(52, -18)
+prompt_message = "Buka Lemari"
 
-[node name="Sprite2D" type="Sprite2D" parent="YSortNodes/LemariInteractable"]
-texture = ExtResource("7_lemari_tex")
-offset = Vector2(0, -12)
+[node name="SpriteLeft" type="Sprite2D" parent="YSortNodes/LemariInteractable"]
+position = Vector2(-8, -8)
+texture = ExtResource("7_indoor")
+region_enabled = true
+region_rect = Rect2(85, 221, 16, 16)
+
+[node name="SpriteRight" type="Sprite2D" parent="YSortNodes/LemariInteractable"]
+position = Vector2(8, -8)
+texture = ExtResource("7_indoor")
+region_enabled = true
+region_rect = Rect2(102, 221, 16, 16)
 
 [node name="CollisionShape2D" parent="YSortNodes/LemariInteractable" index="0"]
-position = Vector2(0, -8)
-shape = SubResource("RectangleShape2D_lemari")
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_prop_interact")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="YSortNodes/LemariInteractable"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSortNodes/LemariInteractable/StaticBody2D"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_prop_solid")
 
 [node name="FanInteractable" parent="YSortNodes" instance=ExtResource("5_interact")]
-position = Vector2(-40, -10)
+position = Vector2(-26, -18)
+prompt_message = "Meja & Kipas"
 
-[node name="Sprite2D" type="Sprite2D" parent="YSortNodes/FanInteractable"]
-texture = ExtResource("8_fan_tex")
-offset = Vector2(0, -8)
+[node name="DeskSprite" type="Sprite2D" parent="YSortNodes/FanInteractable"]
+position = Vector2(0, -8)
+texture = ExtResource("7_indoor")
+region_enabled = true
+region_rect = Rect2(102, 68, 16, 16)
+
+[node name="PlantSprite" type="Sprite2D" parent="YSortNodes/FanInteractable"]
+position = Vector2(0, -18)
+texture = ExtResource("7_indoor")
+region_enabled = true
+region_rect = Rect2(272, 0, 16, 16)
 
 [node name="CollisionShape2D" parent="YSortNodes/FanInteractable" index="0"]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_prop_interact")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="YSortNodes/FanInteractable"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSortNodes/FanInteractable/StaticBody2D"]
 position = Vector2(0, -6)
-shape = SubResource("RectangleShape2D_fan")
+shape = SubResource("RectangleShape2D_prop_solid")
 
 [node name="DispenserInteractable" parent="YSortNodes" instance=ExtResource("5_interact")]
-position = Vector2(100, 20)
+position = Vector2(60, 20)
+prompt_message = "Minum Air Galon"
 
 [node name="Sprite2D" type="Sprite2D" parent="YSortNodes/DispenserInteractable"]
-texture = ExtResource("9_disp_tex")
-offset = Vector2(0, -10)
+position = Vector2(0, -8)
+texture = ExtResource("6_urban")
+region_enabled = true
+region_rect = Rect2(128, 176, 16, 16)
 
 [node name="CollisionShape2D" parent="YSortNodes/DispenserInteractable" index="0"]
-position = Vector2(0, -8)
-shape = SubResource("RectangleShape2D_disp")
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_prop_interact")
 
-[node name="KardusSprite" type="Sprite2D" parent="YSortNodes"]
-position = Vector2(-80, 50)
-texture = ExtResource("10_box_tex")
+[node name="StaticBody2D" type="StaticBody2D" parent="YSortNodes/DispenserInteractable"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSortNodes/DispenserInteractable/StaticBody2D"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_prop_solid")
+
+[node name="JemuranKardusNode" type="StaticBody2D" parent="YSortNodes"]
+position = Vector2(-52, 36)
+
+[node name="KardusSprite" type="Sprite2D" parent="YSortNodes/JemuranKardusNode"]
+position = Vector2(0, -8)
+texture = ExtResource("6_urban")
+region_enabled = true
+region_rect = Rect2(48, 160, 32, 16)
+
+[node name="JemuranSprite" type="Sprite2D" parent="YSortNodes/JemuranKardusNode"]
+position = Vector2(84, -8)
+texture = ExtResource("6_urban")
+region_enabled = true
+region_rect = Rect2(0, 128, 48, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSortNodes/JemuranKardusNode"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_prop_solid")
 
 [node name="Player" parent="YSortNodes" instance=ExtResource("2_player")]
-position = Vector2(0, 30)
+position = Vector2(0, 12)
 
 [node name="Camera2D" type="Camera2D" parent="YSortNodes/Player"]
-zoom = Vector2(1, 1)
+limit_left = -160
+limit_top = -100
+limit_right = 160
+limit_bottom = 100
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
 
 [node name="HUD" parent="." instance=ExtResource("3_hud")]
 
