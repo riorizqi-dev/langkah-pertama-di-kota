@@ -1,10 +1,10 @@
 extends Control
 
-## Main Menu Controller - Langkah Pertama di Kota (Gaya Citampi Stories / Stardew Valley)
+## Main Menu Controller - Langkah Pertama di Kota (960x540, 32x32 Shaded Pixel Art)
 ## Hanya 4 tombol utama: Mulai Baru, Lanjutkan, Pengaturan, Keluar.
 ## Mendukung navigasi Keyboard (W/S/Panah + Enter) dan Mouse + SFX klik + BGM.
 
-const URBAN_TILES_PATH: String = "res://assets/tilesets/kenney_urban_16x16.png"
+const ROOM_BUILDER_PATH: String = "res://assets/tilesets/modern_room_builder_32x32.png"
 
 @onready var night_street_map: TileMapLayer = $BackgroundScene/NightStreetMap
 @onready var btn_start: Button = $ButtonsVBox/BtnStart
@@ -47,54 +47,36 @@ func _ready() -> void:
 
 func _build_night_street_tilemap() -> void:
 	var ts := TileSet.new()
-	ts.tile_size = Vector2i(16, 16)
+	ts.tile_size = Vector2i(32, 32)
 	var src := TileSetAtlasSource.new()
-	src.texture = load(URBAN_TILES_PATH)
-	src.texture_region_size = Vector2i(16, 16)
+	src.texture = load(ROOM_BUILDER_PATH)
+	src.texture_region_size = Vector2i(32, 32)
 	ts.add_source(src, 0)
 	
-	# Daftarkan semua tile 27x18 di atlas
-	for tx in range(27):
-		for ty in range(18):
+	for tx in range(17):
+		for ty in range(23):
 			src.create_tile(Vector2i(tx, ty))
 			
 	night_street_map.tile_set = ts
-	night_street_map.modulate = Color(0.82, 0.85, 0.96, 1.0)
+	night_street_map.modulate = Color(0.78, 0.82, 0.94, 1.0)
 	
-	var deco_layer := TileMapLayer.new()
-	deco_layer.tile_set = ts
-	night_street_map.add_child(deco_layer)
-	
-	# Bangunan kiri (x = 0..5, y = 6..8) - Bata Merah
+	# Bangunan Kos Kiri (x = 0..5, y = 5..6) - Dinding Bata Merah 32x32
 	for x in range(0, 6):
-		night_street_map.set_cell(Vector2i(x, 6), 0, Vector2i(18, 0)) # Atap
-		night_street_map.set_cell(Vector2i(x, 7), 0, Vector2i(18, 2)) # Dinding bata merah murni
-		night_street_map.set_cell(Vector2i(x, 8), 0, Vector2i(18, 3)) # Dinding bawah
-	deco_layer.set_cell(Vector2i(1, 7), 0, Vector2i(11, 13)) # Jendela kiri di atas bata
-	deco_layer.set_cell(Vector2i(4, 7), 0, Vector2i(11, 13)) # Jendela kanan di atas bata
-	deco_layer.set_cell(Vector2i(2, 8), 0, Vector2i(13, 10)) # Pintu kayu kos
-	
-	# Bangunan kanan (x = 14..19, y = 5..8) - Bata Cokelat
-	for x in range(14, 20):
-		night_street_map.set_cell(Vector2i(x, 5), 0, Vector2i(18, 4)) # Atap ruko
-		night_street_map.set_cell(Vector2i(x, 6), 0, Vector2i(18, 6)) # Dinding bata cokelat murni
-		night_street_map.set_cell(Vector2i(x, 7), 0, Vector2i(18, 6))
-		night_street_map.set_cell(Vector2i(x, 8), 0, Vector2i(18, 7))
-	deco_layer.set_cell(Vector2i(15, 6), 0, Vector2i(12, 13))
-	deco_layer.set_cell(Vector2i(18, 6), 0, Vector2i(12, 13))
-	deco_layer.set_cell(Vector2i(16, 8), 0, Vector2i(14, 10))
-	
-	# Trotoar (y = 9) dan jalan aspal malam (y = 10..11)
-	for x in range(20):
-		night_street_map.set_cell(Vector2i(x, 9), 0, Vector2i(9, 4))
-		night_street_map.set_cell(Vector2i(x, 10), 0, Vector2i(1, 15))
-		night_street_map.set_cell(Vector2i(x, 11), 0, Vector2i(1, 16))
+		night_street_map.set_cell(Vector2i(x, 4), 0, Vector2i(12, 0))
+		night_street_map.set_cell(Vector2i(x, 5), 0, Vector2i(5, 15))
+		night_street_map.set_cell(Vector2i(x, 6), 0, Vector2i(8, 16))
 		
-	# Lampu jalan di atas dinding bata
-	deco_layer.set_cell(Vector2i(3, 7), 0, Vector2i(2, 6))
-	deco_layer.set_cell(Vector2i(3, 8), 0, Vector2i(2, 7))
-	deco_layer.set_cell(Vector2i(17, 7), 0, Vector2i(2, 6))
-	deco_layer.set_cell(Vector2i(17, 8), 0, Vector2i(2, 7))
+	# Bangunan Ruko Kanan (x = 10..15, y = 5..6) - Dinding Abu Modern 32x32
+	for x in range(10, 16):
+		night_street_map.set_cell(Vector2i(x, 4), 0, Vector2i(12, 0))
+		night_street_map.set_cell(Vector2i(x, 5), 0, Vector2i(5, 17))
+		night_street_map.set_cell(Vector2i(x, 6), 0, Vector2i(8, 18))
+		
+	# Trotoar Beton (y = 7) & Jalan Aspal Malam (y = 8)
+	for x in range(0, 16):
+		var sw_col: int = 11 if (x % 2 == 0) else 12
+		night_street_map.set_cell(Vector2i(x, 7), 0, Vector2i(sw_col, 11))
+		night_street_map.set_cell(Vector2i(x, 8), 0, Vector2i(14 + (x % 2), 11))
 
 func _setup_button_navigation() -> void:
 	var buttons: Array[Button] = [btn_start, btn_continue, btn_settings, btn_exit]

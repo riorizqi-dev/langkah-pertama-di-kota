@@ -1,69 +1,97 @@
-[gd_scene load_steps=16 format=3 uid="uid://d3m8n7p2k1x9q"]
+[gd_scene load_steps=19 format=3 uid="uid://d3m8n7p2k1x9q"]
 
 [ext_resource type="Script" path="res://scripts/ui/main_menu.gd" id="1_menu"]
-[ext_resource type="FontFile" path="res://assets/ui/PixelifySans.ttf" id="2_font_title"]
-[ext_resource type="FontFile" path="res://assets/ui/PressStart2P.ttf" id="3_font_pixel"]
+[ext_resource type="FontFile" path="res://assets/ui/montserrat_extra_bold.otf" id="2_font_bold"]
+[ext_resource type="FontFile" path="res://assets/ui/font_main.otf" id="3_font_main"]
 [ext_resource type="Texture2D" path="res://assets/ui/kenney_ui_rpg.png" id="4_ui_sheet"]
 [ext_resource type="Texture2D" path="res://assets/sprites/props/city_bg_back.png" id="5_city_back"]
 [ext_resource type="Texture2D" path="res://assets/sprites/props/city_bg_front.png" id="6_city_front"]
-[ext_resource type="Texture2D" path="res://assets/tilesets/kenney_urban_16x16.png" id="7_urban_tiles"]
-[ext_resource type="Texture2D" path="res://assets/sprites/props/light_cookie.png" id="8_light"]
-[ext_resource type="AudioStream" path="res://assets/audio/bgm/menu_theme.ogg" id="9_bgm"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/ui_click.wav" id="10_sfx"]
+[ext_resource type="Texture2D" path="res://assets/tilesets/modern_interiors_32x32.png" id="7_interiors"]
+[ext_resource type="Texture2D" path="res://assets/tilesets/modern_exterior_32x32.png" id="8_exterior"]
+[ext_resource type="Texture2D" path="res://assets/sprites/props/light_cookie.png" id="9_light"]
+[ext_resource type="AudioStream" path="res://assets/audio/bgm/menu_theme.ogg" id="10_bgm"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/ui_click.wav" id="11_sfx"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/joko_32x48.png" id="12_joko"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_btn_normal"]
-content_margin_left = 8.0
-content_margin_top = 4.0
-content_margin_right = 8.0
-content_margin_bottom = 4.0
-texture = ExtResource("4_ui_sheet")
-texture_margin_left = 6.0
-texture_margin_top = 6.0
-texture_margin_right = 6.0
-texture_margin_bottom = 6.0
-region_rect = Rect2(0, 282, 190, 49)
-modulate_color = Color(0.94, 0.46, 0.1, 1)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_btn_hover"]
-content_margin_left = 8.0
-content_margin_top = 4.0
-content_margin_right = 8.0
-content_margin_bottom = 4.0
-texture = ExtResource("4_ui_sheet")
-texture_margin_left = 6.0
-texture_margin_top = 6.0
-texture_margin_right = 6.0
-texture_margin_bottom = 6.0
-region_rect = Rect2(0, 282, 190, 49)
-modulate_color = Color(1, 0.66, 0.2, 1)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_btn_pressed"]
-content_margin_left = 8.0
-content_margin_top = 5.0
-content_margin_right = 8.0
-content_margin_bottom = 3.0
-texture = ExtResource("4_ui_sheet")
-texture_margin_left = 6.0
-texture_margin_top = 6.0
-texture_margin_right = 6.0
-texture_margin_bottom = 6.0
-region_rect = Rect2(0, 237, 190, 45)
-modulate_color = Color(0.78, 0.35, 0.08, 1)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_panel"]
-content_margin_left = 10.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+content_margin_left = 16.0
 content_margin_top = 8.0
-content_margin_right = 10.0
+content_margin_right = 16.0
 content_margin_bottom = 8.0
-texture = ExtResource("4_ui_sheet")
-texture_margin_left = 8.0
-texture_margin_top = 8.0
-texture_margin_right = 8.0
-texture_margin_bottom = 8.0
-region_rect = Rect2(0, 376, 100, 100)
+bg_color = Color(0.11, 0.14, 0.22, 0.88)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(0.88, 0.68, 0.32, 0.65)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.35)
+shadow_size = 6
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+bg_color = Color(0.88, 0.52, 0.16, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(1, 0.9, 0.55, 0.95)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_size = 8
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
+content_margin_left = 16.0
+content_margin_top = 9.0
+content_margin_right = 16.0
+content_margin_bottom = 7.0
+bg_color = Color(0.72, 0.38, 0.1, 0.98)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0.82, 0.42, 0.9)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 24.0
+content_margin_top = 20.0
+content_margin_right = 24.0
+content_margin_bottom = 20.0
+bg_color = Color(0.09, 0.11, 0.18, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.92, 0.72, 0.35, 0.85)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 12
+shadow_offset = Vector2(0, 5)
 
 [sub_resource type="Gradient" id="Gradient_fireflies"]
-colors = PackedColorArray(1, 0.88, 0.45, 0.9, 1, 0.7, 0.2, 0)
+colors = PackedColorArray(1, 0.88, 0.45, 0.85, 1, 0.7, 0.2, 0)
+
+[sub_resource type="AtlasTexture" id="Atlas_joko_idle"]
+atlas = ExtResource("12_joko")
+region = Rect2(576, 0, 32, 48)
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -77,76 +105,145 @@ script = ExtResource("1_menu")
 [node name="BackgroundScene" type="Node2D" parent="."]
 
 [node name="SkySprite" type="Sprite2D" parent="BackgroundScene"]
-modulate = Color(0.14, 0.22, 0.42, 1)
-position = Vector2(160, 90)
-scale = Vector2(4, 2.2)
+modulate = Color(0.11, 0.17, 0.32, 1)
+position = Vector2(480, 270)
+scale = Vector2(12, 6.6)
 texture = ExtResource("4_ui_sheet")
 region_enabled = true
 region_rect = Rect2(196, 106, 88, 88)
 
 [node name="CityBack" type="Sprite2D" parent="BackgroundScene"]
-modulate = Color(0.25, 0.34, 0.55, 1)
-position = Vector2(160, 92)
-scale = Vector2(0.18, 0.18)
+modulate = Color(0.24, 0.33, 0.54, 1)
+position = Vector2(480, 250)
+scale = Vector2(0.54, 0.54)
 texture = ExtResource("5_city_back")
 region_enabled = true
 region_rect = Rect2(0, 0, 1800, 1080)
 
 [node name="CityFront" type="Sprite2D" parent="BackgroundScene"]
-modulate = Color(0.52, 0.6, 0.78, 1)
-position = Vector2(160, 100)
-scale = Vector2(0.16, 0.16)
+modulate = Color(0.46, 0.56, 0.75, 1)
+position = Vector2(480, 278)
+scale = Vector2(0.48, 0.48)
 texture = ExtResource("6_city_front")
 region_enabled = true
 region_rect = Rect2(0, 0, 2000, 1080)
 
 [node name="NightStreetMap" type="TileMapLayer" parent="BackgroundScene"]
+scale = Vector2(2, 2)
+
+[node name="StreetProps" type="Node2D" parent="BackgroundScene"]
+scale = Vector2(2, 2)
+
+[node name="WindowKost1" type="Sprite2D" parent="BackgroundScene/StreetProps"]
+position = Vector2(64, 160)
+texture = ExtResource("7_interiors")
+region_enabled = true
+region_rect = Rect2(224, 768, 64, 64)
+
+[node name="WindowKost2" type="Sprite2D" parent="BackgroundScene/StreetProps"]
+position = Vector2(160, 160)
+texture = ExtResource("7_interiors")
+region_enabled = true
+region_rect = Rect2(224, 768, 64, 64)
+
+[node name="DoorKost" type="Sprite2D" parent="BackgroundScene/StreetProps"]
+position = Vector2(112, 192)
+texture = ExtResource("7_interiors")
+region_enabled = true
+region_rect = Rect2(224, 256, 32, 64)
+
+[node name="WindowRuko1" type="Sprite2D" parent="BackgroundScene/StreetProps"]
+position = Vector2(352, 160)
+texture = ExtResource("7_interiors")
+region_enabled = true
+region_rect = Rect2(288, 768, 64, 64)
+
+[node name="WindowRuko2" type="Sprite2D" parent="BackgroundScene/StreetProps"]
+position = Vector2(432, 160)
+texture = ExtResource("7_interiors")
+region_enabled = true
+region_rect = Rect2(288, 768, 64, 64)
+
+[node name="DoorRuko" type="Sprite2D" parent="BackgroundScene/StreetProps"]
+position = Vector2(384, 192)
+texture = ExtResource("7_interiors")
+region_enabled = true
+region_rect = Rect2(352, 768, 64, 64)
+
+[node name="TreeLeft" type="Sprite2D" parent="BackgroundScene/StreetProps"]
+position = Vector2(208, 176)
+texture = ExtResource("8_exterior")
+region_enabled = true
+region_rect = Rect2(0, 0, 96, 96)
+
+[node name="TreeRight" type="Sprite2D" parent="BackgroundScene/StreetProps"]
+position = Vector2(304, 176)
+texture = ExtResource("8_exterior")
+region_enabled = true
+region_rect = Rect2(288, 0, 96, 96)
+
+[node name="BenchLeft" type="Sprite2D" parent="BackgroundScene/StreetProps"]
+position = Vector2(64, 220)
+texture = ExtResource("7_interiors")
+region_enabled = true
+region_rect = Rect2(128, 992, 64, 32)
+
+[node name="JokoShadow" type="Sprite2D" parent="BackgroundScene/StreetProps"]
+modulate = Color(0, 0, 0, 0.35)
+position = Vector2(128, 236)
+scale = Vector2(0.055, 0.025)
+texture = ExtResource("9_light")
+
+[node name="JokoPreview" type="Sprite2D" parent="BackgroundScene/StreetProps"]
+position = Vector2(128, 214)
+texture = SubResource("Atlas_joko_idle")
 
 [node name="StreetLampLeft" type="PointLight2D" parent="BackgroundScene"]
-position = Vector2(40, 128)
-color = Color(1, 0.78, 0.35, 1)
-energy = 0.35
-texture = ExtResource("8_light")
-texture_scale = 0.18
+position = Vector2(224, 340)
+color = Color(1, 0.78, 0.38, 1)
+energy = 0.42
+texture = ExtResource("9_light")
+texture_scale = 0.55
 
 [node name="StreetLampRight" type="PointLight2D" parent="BackgroundScene"]
-position = Vector2(280, 128)
-color = Color(1, 0.78, 0.35, 1)
-energy = 0.35
-texture = ExtResource("8_light")
-texture_scale = 0.18
+position = Vector2(768, 340)
+color = Color(1, 0.78, 0.38, 1)
+energy = 0.42
+texture = ExtResource("9_light")
+texture_scale = 0.55
 
 [node name="AmbientParticles" type="CPUParticles2D" parent="BackgroundScene"]
-position = Vector2(160, 140)
-amount = 18
-lifetime = 3.5
+position = Vector2(480, 380)
+amount = 28
+lifetime = 4.0
 emission_shape = 3
-emission_rect_extents = Vector2(160, 50)
+emission_rect_extents = Vector2(480, 140)
 direction = Vector2(0, -1)
 spread = 35.0
-gravity = Vector2(0, -3)
-initial_velocity_min = 4.0
-initial_velocity_max = 10.0
-scale_amount_min = 1.0
-scale_amount_max = 2.0
+gravity = Vector2(0, -4)
+initial_velocity_min = 8.0
+initial_velocity_max = 18.0
+scale_amount_min = 2.0
+scale_amount_max = 3.5
 color_ramp = SubResource("Gradient_fireflies")
 
 [node name="VersionLabel" type="Label" parent="."]
+texture_filter = 2
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -96.0
-offset_top = 4.0
-offset_right = -5.0
-offset_bottom = 16.0
+offset_left = -160.0
+offset_top = 14.0
+offset_right = -20.0
+offset_bottom = 36.0
 grow_horizontal = 0
-theme_override_colors/font_color = Color(0.95, 0.96, 1, 0.9)
-theme_override_colors/font_outline_color = Color(0.08, 0.1, 0.18, 1)
-theme_override_constants/outline_size = 2
-theme_override_fonts/font = ExtResource("3_font_pixel")
-theme_override_font_sizes/font_size = 6
-text = "v0.2.0"
+theme_override_colors/font_color = Color(0.88, 0.92, 0.98, 0.8)
+theme_override_colors/font_outline_color = Color(0.05, 0.08, 0.14, 0.9)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_font_main")
+theme_override_font_sizes/font_size = 12
+text = "v0.3.0 • 32x32 HD Pixel"
 horizontal_alignment = 2
 
 [node name="TitleContainer" type="VBoxContainer" parent="."]
@@ -154,37 +251,39 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -150.0
-offset_top = 8.0
-offset_right = 150.0
-offset_bottom = 64.0
+offset_left = -280.0
+offset_top = 42.0
+offset_right = 280.0
+offset_bottom = 146.0
 grow_horizontal = 2
-theme_override_constants/separation = -4
+theme_override_constants/separation = 2
 alignment = 1
 
 [node name="TitleMain" type="Label" parent="TitleContainer"]
+texture_filter = 2
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.78, 0.25, 1)
-theme_override_colors/font_shadow_color = Color(0.18, 0.05, 0.02, 0.95)
-theme_override_colors/font_outline_color = Color(0.32, 0.09, 0.03, 1)
-theme_override_constants/shadow_offset_x = 1
-theme_override_constants/shadow_offset_y = 2
-theme_override_constants/outline_size = 5
-theme_override_fonts/font = ExtResource("2_font_title")
-theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(1, 0.84, 0.36, 1)
+theme_override_colors/font_shadow_color = Color(0.08, 0.04, 0.02, 0.9)
+theme_override_colors/font_outline_color = Color(0.24, 0.1, 0.04, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_font_bold")
+theme_override_font_sizes/font_size = 36
 text = "Langkah Pertama"
 horizontal_alignment = 1
 
 [node name="TitleSub" type="Label" parent="TitleContainer"]
+texture_filter = 2
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.92, 0.62, 1)
-theme_override_colors/font_shadow_color = Color(0.18, 0.05, 0.02, 0.95)
-theme_override_colors/font_outline_color = Color(0.32, 0.09, 0.03, 1)
-theme_override_constants/shadow_offset_x = 1
+theme_override_colors/font_color = Color(0.98, 0.94, 0.82, 1)
+theme_override_colors/font_shadow_color = Color(0.08, 0.04, 0.02, 0.85)
+theme_override_colors/font_outline_color = Color(0.2, 0.09, 0.04, 1)
+theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 2
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("2_font_title")
-theme_override_font_sizes/font_size = 16
+theme_override_fonts/font = ExtResource("3_font_main")
+theme_override_font_sizes/font_size = 18
 text = "di Kota"
 horizontal_alignment = 1
 
@@ -195,78 +294,74 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -64.0
-offset_top = -18.0
-offset_right = 64.0
-offset_bottom = 76.0
+offset_left = -98.0
+offset_top = -24.0
+offset_right = 98.0
+offset_bottom = 148.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 4
+theme_override_constants/separation = 8
 alignment = 1
 
 [node name="BtnStart" type="Button" parent="ButtonsVBox"]
-custom_minimum_size = Vector2(128, 20)
+texture_filter = 2
+custom_minimum_size = Vector2(196, 36)
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.98, 0.92, 1)
-theme_override_colors/font_focus_color = Color(1, 1, 0.85, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 0.85, 1)
-theme_override_colors/font_outline_color = Color(0.35, 0.14, 0.04, 1)
-theme_override_constants/outline_size = 2
-theme_override_fonts/font = ExtResource("3_font_pixel")
-theme_override_font_sizes/font_size = 6
-theme_override_styles/normal = SubResource("StyleBoxTexture_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxTexture_btn_hover")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_btn_pressed")
-theme_override_styles/focus = SubResource("StyleBoxTexture_btn_hover")
-text = "MULAI BARU"
+theme_override_colors/font_color = Color(0.98, 0.96, 0.92, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0.92, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0.92, 1)
+theme_override_fonts/font = ExtResource("2_font_bold")
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
+text = "Mulai Baru"
 
 [node name="BtnContinue" type="Button" parent="ButtonsVBox"]
-custom_minimum_size = Vector2(128, 20)
+texture_filter = 2
+custom_minimum_size = Vector2(196, 36)
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.98, 0.92, 1)
-theme_override_colors/font_focus_color = Color(1, 1, 0.85, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 0.85, 1)
-theme_override_colors/font_outline_color = Color(0.35, 0.14, 0.04, 1)
-theme_override_constants/outline_size = 2
-theme_override_fonts/font = ExtResource("3_font_pixel")
-theme_override_font_sizes/font_size = 6
-theme_override_styles/normal = SubResource("StyleBoxTexture_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxTexture_btn_hover")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_btn_pressed")
-theme_override_styles/focus = SubResource("StyleBoxTexture_btn_hover")
-text = "LANJUTKAN"
+theme_override_colors/font_color = Color(0.98, 0.96, 0.92, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0.92, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0.92, 1)
+theme_override_fonts/font = ExtResource("2_font_bold")
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
+text = "Lanjutkan"
 
 [node name="BtnSettings" type="Button" parent="ButtonsVBox"]
-custom_minimum_size = Vector2(128, 20)
+texture_filter = 2
+custom_minimum_size = Vector2(196, 36)
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.98, 0.92, 1)
-theme_override_colors/font_focus_color = Color(1, 1, 0.85, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 0.85, 1)
-theme_override_colors/font_outline_color = Color(0.35, 0.14, 0.04, 1)
-theme_override_constants/outline_size = 2
-theme_override_fonts/font = ExtResource("3_font_pixel")
-theme_override_font_sizes/font_size = 6
-theme_override_styles/normal = SubResource("StyleBoxTexture_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxTexture_btn_hover")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_btn_pressed")
-theme_override_styles/focus = SubResource("StyleBoxTexture_btn_hover")
-text = "PENGATURAN"
+theme_override_colors/font_color = Color(0.98, 0.96, 0.92, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0.92, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0.92, 1)
+theme_override_fonts/font = ExtResource("2_font_bold")
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
+text = "Pengaturan"
 
 [node name="BtnExit" type="Button" parent="ButtonsVBox"]
-custom_minimum_size = Vector2(128, 20)
+texture_filter = 2
+custom_minimum_size = Vector2(196, 36)
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.98, 0.92, 1)
-theme_override_colors/font_focus_color = Color(1, 1, 0.85, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 0.85, 1)
-theme_override_colors/font_outline_color = Color(0.35, 0.14, 0.04, 1)
-theme_override_constants/outline_size = 2
-theme_override_fonts/font = ExtResource("3_font_pixel")
-theme_override_font_sizes/font_size = 6
-theme_override_styles/normal = SubResource("StyleBoxTexture_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxTexture_btn_hover")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_btn_pressed")
-theme_override_styles/focus = SubResource("StyleBoxTexture_btn_hover")
-text = "KELUAR"
+theme_override_colors/font_color = Color(0.98, 0.96, 0.92, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0.92, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0.92, 1)
+theme_override_fonts/font = ExtResource("2_font_bold")
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
+text = "Keluar"
 
 [node name="ModalSettings" type="PanelContainer" parent="."]
 visible = false
@@ -276,27 +371,26 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -105.0
-offset_top = -52.0
-offset_right = 105.0
-offset_bottom = 52.0
+offset_left = -160.0
+offset_top = -90.0
+offset_right = 160.0
+offset_bottom = 90.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_panel")
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
 [node name="VBox" type="VBoxContainer" parent="ModalSettings"]
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 16
 alignment = 1
 
 [node name="Title" type="Label" parent="ModalSettings/VBox"]
+texture_filter = 2
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.9, 0.5, 1)
-theme_override_colors/font_outline_color = Color(0.2, 0.08, 0.02, 1)
-theme_override_constants/outline_size = 2
-theme_override_fonts/font = ExtResource("3_font_pixel")
-theme_override_font_sizes/font_size = 6
-text = "PENGATURAN"
+theme_override_colors/font_color = Color(1, 0.88, 0.45, 1)
+theme_override_fonts/font = ExtResource("2_font_bold")
+theme_override_font_sizes/font_size = 16
+text = "Pengaturan"
 horizontal_alignment = 1
 
 [node name="HBoxFullscreen" type="HBoxContainer" parent="ModalSettings/VBox"]
@@ -304,37 +398,37 @@ layout_mode = 2
 alignment = 1
 
 [node name="Label" type="Label" parent="ModalSettings/VBox/HBoxFullscreen"]
+texture_filter = 2
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(1, 0.98, 0.9, 1)
-theme_override_fonts/font = ExtResource("3_font_pixel")
-theme_override_font_sizes/font_size = 6
-text = "Layar Penuh"
+theme_override_colors/font_color = Color(0.95, 0.96, 0.98, 1)
+theme_override_fonts/font = ExtResource("3_font_main")
+theme_override_font_sizes/font_size = 14
+text = "Mode Layar Penuh"
 
 [node name="CheckFullscreen" type="CheckButton" parent="ModalSettings/VBox/HBoxFullscreen"]
 layout_mode = 2
 
 [node name="BtnCloseSettings" type="Button" parent="ModalSettings/VBox"]
-custom_minimum_size = Vector2(96, 18)
+texture_filter = 2
+custom_minimum_size = Vector2(140, 34)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(1, 0.98, 0.92, 1)
-theme_override_colors/font_outline_color = Color(0.35, 0.14, 0.04, 1)
-theme_override_constants/outline_size = 2
-theme_override_fonts/font = ExtResource("3_font_pixel")
-theme_override_font_sizes/font_size = 6
-theme_override_styles/normal = SubResource("StyleBoxTexture_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxTexture_btn_hover")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_btn_pressed")
-theme_override_styles/focus = SubResource("StyleBoxTexture_btn_hover")
-text = "TUTUP"
+theme_override_fonts/font = ExtResource("2_font_bold")
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
+text = "Tutup"
 
 [node name="BGMPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("9_bgm")
+stream = ExtResource("10_bgm")
 volume_db = -8.0
 
 [node name="SFXPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("10_sfx")
+stream = ExtResource("11_sfx")
 volume_db = -4.0
 
 [node name="FadeLayer" type="CanvasLayer" parent="."]
@@ -343,8 +437,8 @@ layer = 10
 [node name="FadeSprite" type="Sprite2D" parent="FadeLayer"]
 visible = false
 modulate = Color(0, 0, 0, 1)
-position = Vector2(160, 90)
-scale = Vector2(4, 2.2)
+position = Vector2(480, 270)
+scale = Vector2(12, 6.6)
 texture = ExtResource("4_ui_sheet")
 region_enabled = true
 region_rect = Rect2(196, 106, 88, 88)

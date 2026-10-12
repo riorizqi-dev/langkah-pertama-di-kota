@@ -1,9 +1,9 @@
 extends Node2D
 
-## Scene Kamar Kos Joko 3x3m (Langkah 3 & 4)
-## Menggunakan TileMapLayer dengan tileset Kenney 16x16 asli, Y-Sort, Collision, dan Interaksi [E].
+## Scene Kamar Kos Joko 3x3m (32x32 Shaded Modern Interiors)
+## Menggunakan TileMapLayer 32x32 dengan modern_room_builder_32x32.png, Y-Sort, Bayangan Lembut, dan Interaksi [E].
 
-const URBAN_TILES_PATH: String = "res://assets/tilesets/kenney_urban_16x16.png"
+const ROOM_BUILDER_PATH: String = "res://assets/tilesets/modern_room_builder_32x32.png"
 
 @onready var bg_layer: TileMapLayer = $BackgroundLayer
 @onready var room_tile_map: TileMapLayer = $RoomTileMap
@@ -26,66 +26,48 @@ func _on_time_changed(_day: int, _phase: String) -> void:
 
 func _build_room_tilemap() -> void:
 	var ts := TileSet.new()
-	ts.tile_size = Vector2i(16, 16)
+	ts.tile_size = Vector2i(32, 32)
 	var src := TileSetAtlasSource.new()
-	src.texture = load(URBAN_TILES_PATH)
-	src.texture_region_size = Vector2i(16, 16)
+	src.texture = load(ROOM_BUILDER_PATH)
+	src.texture_region_size = Vector2i(32, 32)
 	ts.add_source(src, 0)
 	
-	for tx in range(27):
-		for ty in range(18):
+	for tx in range(17):
+		for ty in range(23):
 			src.create_tile(Vector2i(tx, ty))
 			
 	bg_layer.tile_set = ts
 	room_tile_map.tile_set = ts
 	
-	# Area gelap di luar tembok kamar kos (-12..11, -8..7)
-	bg_layer.modulate = Color(0.18, 0.2, 0.28, 1.0)
-	for x in range(-12, 12):
-		for y in range(-8, 8):
-			bg_layer.set_cell(Vector2i(x, y), 0, Vector2i(9, 1))
+	# Area gelap di luar tembok kamar kos (-10..9, -6..6)
+	bg_layer.modulate = Color(0.1, 0.12, 0.18, 1.0)
+	for x in range(-10, 10):
+		for y in range(-6, 7):
+			bg_layer.set_cell(Vector2i(x, y), 0, Vector2i(12, 0))
 			
-	var deco_layer := TileMapLayer.new()
-	deco_layer.tile_set = ts
-	room_tile_map.add_child(deco_layer)
-	
-	# Tembok atas kamar kos (x = -5..4, y = -4..-3)
+	# Tembok atas kamar kos (x = -5..4, y = -4..-3) - Dinding Krem + Baseboard Kayu 32x32
 	for x in range(-5, 5):
-		room_tile_map.set_cell(Vector2i(x, -4), 0, Vector2i(18, 4)) # Atap/Batas tembok atas
-		room_tile_map.set_cell(Vector2i(x, -3), 0, Vector2i(18, 6)) # Dinding tembok bata dalam
-	# Jendela kamar kos di tembok atas (overlay di atas bata)
-	deco_layer.set_cell(Vector2i(-3, -3), 0, Vector2i(11, 13))
-	deco_layer.set_cell(Vector2i(2, -3), 0, Vector2i(11, 13))
-	
+		room_tile_map.set_cell(Vector2i(x, -4), 0, Vector2i(5, 7))
+		room_tile_map.set_cell(Vector2i(x, -3), 0, Vector2i(8, 8))
+		
 	# Lantai keramik krem hangat kamar kos 3x3m (x = -5..4, y = -2..3)
 	for x in range(-5, 5):
 		for y in range(-2, 4):
-			var tx: int = 1
-			var ty: int = 4
-			if x == -5 and y == -2:
-				tx = 0; ty = 3
-			elif x == 4 and y == -2:
-				tx = 2; ty = 3
-			elif x == -5 and y == 3:
-				tx = 0; ty = 5
-			elif x == 4 and y == 3:
-				tx = 2; ty = 5
-			elif y == -2:
-				tx = 1; ty = 3
-			elif y == 3:
-				tx = 1; ty = 5
-			elif x == -5:
-				tx = 0; ty = 4
-			elif x == 4:
-				tx = 2; ty = 4
-			room_tile_map.set_cell(Vector2i(x, y), 0, Vector2i(tx, ty))
-			
-	# Dinding pembatas kiri, kanan, dan bawah kamar
-	for y in range(-4, 5):
-		room_tile_map.set_cell(Vector2i(-6, y), 0, Vector2i(18, 6))
-		room_tile_map.set_cell(Vector2i(5, y), 0, Vector2i(18, 6))
+			if (x == -1 or x == 0) and y == -2:
+				# Keset / Parket kayu di depan pintu kos
+				room_tile_map.set_cell(Vector2i(x, y), 0, Vector2i(11 + abs(x % 2), 13))
+			else:
+				var col: int = 11 + (abs(x + y) % 2)
+				var row: int = 7 + (abs(y) % 2)
+				room_tile_map.set_cell(Vector2i(x, y), 0, Vector2i(col, row))
+				
+	# Dinding pembatas gelap di sekeliling luar kamar kos
+	for y in range(-5, 5):
+		room_tile_map.set_cell(Vector2i(-6, y), 0, Vector2i(12, 0))
+		room_tile_map.set_cell(Vector2i(5, y), 0, Vector2i(12, 0))
 	for x in range(-6, 6):
-		room_tile_map.set_cell(Vector2i(x, 4), 0, Vector2i(18, 7))
+		room_tile_map.set_cell(Vector2i(x, -5), 0, Vector2i(12, 0))
+		room_tile_map.set_cell(Vector2i(x, 4), 0, Vector2i(12, 0))
 
 func _update_lighting_by_time() -> void:
 	match GameState.get_current_phase_name():
@@ -115,7 +97,7 @@ func _on_bed_interacted() -> void:
 	var bed_dlg: Array[Dictionary] = [
 		{
 			"speaker": "Joko",
-			"text": "Rebahan di kasur tipis kosan... Badan kembali segar dan waktu berganti ke hari berikutnya!"
+			"text": "Rebahan di kasur kosan... Badan kembali segar dan waktu berganti ke hari berikutnya!"
 		}
 	]
 	dialogue_box.start_dialogue(bed_dlg)
@@ -140,7 +122,7 @@ func _on_fan_interacted() -> void:
 	dialogue_box.start_dialogue([
 		{
 			"speaker": "Joko",
-			"text": "Meja kayu kecil dan tanaman pot... Pikiran jadi sedikit lebih tenang (Stres -5)."
+			"text": "Meja belajar kayu dengan lampu duduk dan tanaman hias... Pikiran jadi lebih tenang (Stres -5)."
 		}
 	])
 	GameState.modify_stress(-5)
@@ -149,7 +131,7 @@ func _on_dispenser_interacted() -> void:
 	dialogue_box.start_dialogue([
 		{
 			"speaker": "Joko",
-			"text": "Minum air putih dari galon kosan... Segar! (Lapar +5)."
+			"text": "Minum air putih dari dispenser galon kosan... Segar! (Lapar +5)."
 		}
 	])
 	GameState.modify_hunger(5)
@@ -158,6 +140,6 @@ func _on_wardrobe_interacted() -> void:
 	dialogue_box.start_dialogue([
 		{
 			"speaker": "Joko",
-			"text": "Lemari kayu kosan berisi baju ganti dari kampung dan catatan utang keluarga yang harus dilunasi."
+			"text": "Lemari kayu dua pintu berisi baju ganti dari kampung dan catatan utang keluarga yang harus dilunasi."
 		}
 	])

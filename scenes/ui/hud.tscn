@@ -1,7 +1,41 @@
-[gd_scene load_steps=3 format=3 uid="uid://cxupw3pvh3r7v"]
+[gd_scene load_steps=8 format=3 uid="uid://cxupw3pvh3r7v"]
 
 [ext_resource type="Script" path="res://scripts/ui/hud_controller.gd" id="1_hud"]
-[ext_resource type="FontFile" path="res://assets/ui/PressStart2P.ttf" id="2_font"]
+[ext_resource type="FontFile" path="res://assets/ui/font_main.otf" id="2_font"]
+[ext_resource type="FontFile" path="res://assets/ui/montserrat_extra_bold.otf" id="3_font_bold"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_bg"]
+bg_color = Color(0.08, 0.1, 0.15, 0.82)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 0.18)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_energy"]
+bg_color = Color(0.24, 0.84, 0.46, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_hunger"]
+bg_color = Color(0.96, 0.72, 0.2, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_stress"]
+bg_color = Color(0.92, 0.32, 0.4, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_hud")
@@ -13,27 +47,28 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 6
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 6
-theme_override_constants/margin_bottom = 5
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/separation = 3
+theme_override_constants/separation = 8
 
 [node name="TopRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 mouse_filter = 2
 
 [node name="LabelTime" type="Label" parent="MarginContainer/VBoxContainer/TopRow"]
+texture_filter = 2
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.96, 0.85, 1)
-theme_override_colors/font_outline_color = Color(0.08, 0.08, 0.14, 1)
-theme_override_constants/outline_size = 2
-theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 6
+theme_override_colors/font_color = Color(1, 0.96, 0.86, 1)
+theme_override_colors/font_outline_color = Color(0.06, 0.08, 0.14, 0.95)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_font_bold")
+theme_override_font_sizes/font_size = 14
 text = "Hari ke-1 [Pagi]"
 
 [node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/TopRow"]
@@ -42,38 +77,42 @@ size_flags_horizontal = 3
 mouse_filter = 2
 
 [node name="LabelMoney" type="Label" parent="MarginContainer/VBoxContainer/TopRow"]
+texture_filter = 2
 layout_mode = 2
-theme_override_colors/font_color = Color(0.55, 0.98, 0.58, 1)
-theme_override_colors/font_outline_color = Color(0.08, 0.08, 0.14, 1)
-theme_override_constants/outline_size = 2
-theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 6
+theme_override_colors/font_color = Color(0.52, 0.96, 0.62, 1)
+theme_override_colors/font_outline_color = Color(0.06, 0.08, 0.14, 0.95)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_font_bold")
+theme_override_font_sizes/font_size = 14
 text = "Rp 50.000"
 
 [node name="StatusBars" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(72, 0)
+custom_minimum_size = Vector2(136, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
-theme_override_constants/separation = 2
+theme_override_constants/separation = 5
 
 [node name="BarEnergy" type="ProgressBar" parent="MarginContainer/VBoxContainer/StatusBars"]
-modulate = Color(0.2, 0.85, 0.3, 1)
-custom_minimum_size = Vector2(68, 5)
+custom_minimum_size = Vector2(132, 8)
 layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bar_energy")
 value = 100.0
 show_percentage = false
 
 [node name="BarHunger" type="ProgressBar" parent="MarginContainer/VBoxContainer/StatusBars"]
-modulate = Color(0.95, 0.72, 0.15, 1)
-custom_minimum_size = Vector2(68, 5)
+custom_minimum_size = Vector2(132, 8)
 layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bar_hunger")
 value = 80.0
 show_percentage = false
 
 [node name="BarStress" type="ProgressBar" parent="MarginContainer/VBoxContainer/StatusBars"]
-modulate = Color(0.9, 0.25, 0.35, 1)
-custom_minimum_size = Vector2(68, 5)
+custom_minimum_size = Vector2(132, 8)
 layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bar_stress")
 value = 20.0
 show_percentage = false

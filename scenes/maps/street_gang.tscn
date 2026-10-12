@@ -1,184 +1,409 @@
-[gd_scene load_steps=15 format=3 uid="uid://cwh1c7k4m029q"]
+[gd_scene load_steps=34 format=3 uid="uid://cwh1c7k4m029q"]
 
 [ext_resource type="Script" path="res://scripts/characters/street_gang.gd" id="1_gang"]
 [ext_resource type="PackedScene" uid="uid://bvyqk58s1p0pl" path="res://scenes/characters/player.tscn" id="2_player"]
 [ext_resource type="PackedScene" uid="uid://cxupw3pvh3r7v" path="res://scenes/ui/hud.tscn" id="3_hud"]
 [ext_resource type="PackedScene" uid="uid://bvyg75m4f128q" path="res://scenes/ui/dialogue_box.tscn" id="4_dlg"]
 [ext_resource type="PackedScene" uid="uid://cih8w0k0y01q" path="res://scenes/ui/interactable_area.tscn" id="5_interact"]
-[ext_resource type="Texture2D" path="res://assets/tilesets/kenney_urban_16x16.png" id="6_urban"]
-[ext_resource type="Texture2D" path="res://assets/sprites/props/light_cookie.png" id="7_light_cookie"]
+[ext_resource type="Texture2D" path="res://assets/tilesets/modern_interiors_32x32.png" id="6_interiors"]
+[ext_resource type="Texture2D" path="res://assets/tilesets/modern_props_32x32.png" id="7_props"]
+[ext_resource type="Texture2D" path="res://assets/tilesets/modern_exterior_32x32.png" id="8_exterior"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/bu_wati_32x48.png" id="9_bu_wati"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/cak_man_32x48.png" id="10_cak_man"]
+[ext_resource type="Texture2D" path="res://assets/sprites/props/light_cookie.png" id="11_light"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_h"]
-size = Vector2(360, 16)
+size = Vector2(680, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_v"]
-size = Vector2(16, 180)
+size = Vector2(24, 320)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_npc"]
-size = Vector2(26, 26)
+size = Vector2(48, 48)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_npc_solid"]
-size = Vector2(12, 10)
+size = Vector2(22, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_warkop"]
-size = Vector2(54, 34)
+size = Vector2(148, 72)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_warkop_solid"]
-size = Vector2(44, 18)
+size = Vector2(136, 36)
+
+[sub_resource type="AtlasTexture" id="Atlas_bw_0"]
+atlas = ExtResource("9_bu_wati")
+region = Rect2(576, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_bw_1"]
+atlas = ExtResource("9_bu_wati")
+region = Rect2(608, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_bw_2"]
+atlas = ExtResource("9_bu_wati")
+region = Rect2(640, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_bw_3"]
+atlas = ExtResource("9_bu_wati")
+region = Rect2(672, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_bw_4"]
+atlas = ExtResource("9_bu_wati")
+region = Rect2(704, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_bw_5"]
+atlas = ExtResource("9_bu_wati")
+region = Rect2(736, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bu_wati"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_bw_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_bw_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_bw_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_bw_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_bw_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_bw_5")
+}],
+"loop": true,
+"name": &"idle_down",
+"speed": 6.5
+}]
+
+[sub_resource type="AtlasTexture" id="Atlas_cm_0"]
+atlas = ExtResource("10_cak_man")
+region = Rect2(576, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_cm_1"]
+atlas = ExtResource("10_cak_man")
+region = Rect2(608, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_cm_2"]
+atlas = ExtResource("10_cak_man")
+region = Rect2(640, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_cm_3"]
+atlas = ExtResource("10_cak_man")
+region = Rect2(672, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_cm_4"]
+atlas = ExtResource("10_cak_man")
+region = Rect2(704, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_cm_5"]
+atlas = ExtResource("10_cak_man")
+region = Rect2(736, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cak_man"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_cm_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_cm_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_cm_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_cm_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_cm_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_cm_5")
+}],
+"loop": true,
+"name": &"idle_down",
+"speed": 6.5
+}]
 
 [sub_resource type="Gradient" id="Gradient_steam"]
 colors = PackedColorArray(1, 1, 1, 0.65, 1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_leaves"]
+colors = PackedColorArray(0.95, 0.82, 0.45, 0.65, 0.9, 0.7, 0.35, 0)
 
 [node name="StreetGang" type="Node2D"]
 script = ExtResource("1_gang")
 
 [node name="CanvasModulateSore" type="CanvasModulate" parent="."]
-color = Color(0.86, 0.82, 0.88, 1)
+color = Color(0.92, 0.88, 0.9, 1)
 
 [node name="StreetTileMap" type="TileMapLayer" parent="."]
+
+[node name="FacadeDecor" type="Node2D" parent="."]
+
+[node name="WindowKost1" type="Sprite2D" parent="FacadeDecor"]
+position = Vector2(-240, -64)
+texture = ExtResource("6_interiors")
+region_enabled = true
+region_rect = Rect2(224, 768, 64, 64)
+
+[node name="WindowKost2" type="Sprite2D" parent="FacadeDecor"]
+position = Vector2(-96, -64)
+texture = ExtResource("6_interiors")
+region_enabled = true
+region_rect = Rect2(128, 768, 96, 64)
+
+[node name="WindowRuko1" type="Sprite2D" parent="FacadeDecor"]
+position = Vector2(32, -64)
+texture = ExtResource("6_interiors")
+region_enabled = true
+region_rect = Rect2(288, 768, 64, 64)
+
+[node name="WindowRuko2" type="Sprite2D" parent="FacadeDecor"]
+position = Vector2(208, -64)
+texture = ExtResource("6_interiors")
+region_enabled = true
+region_rect = Rect2(288, 768, 64, 64)
+
+[node name="RukoDoubleDoor" type="Sprite2D" parent="FacadeDecor"]
+position = Vector2(120, -64)
+texture = ExtResource("6_interiors")
+region_enabled = true
+region_rect = Rect2(352, 768, 64, 64)
 
 [node name="StaticBody2D_Walls" type="StaticBody2D" parent="."]
 
 [node name="WallTop" type="CollisionShape2D" parent="StaticBody2D_Walls"]
-position = Vector2(0, -24)
+position = Vector2(0, -40)
 shape = SubResource("RectangleShape2D_wall_h")
 
 [node name="WallBottom" type="CollisionShape2D" parent="StaticBody2D_Walls"]
-position = Vector2(0, 80)
+position = Vector2(0, 136)
 shape = SubResource("RectangleShape2D_wall_h")
 
 [node name="WallLeft" type="CollisionShape2D" parent="StaticBody2D_Walls"]
-position = Vector2(-168, 28)
+position = Vector2(-316, 48)
 shape = SubResource("RectangleShape2D_wall_v")
 
 [node name="WallRight" type="CollisionShape2D" parent="StaticBody2D_Walls"]
-position = Vector2(168, 28)
+position = Vector2(316, 48)
 shape = SubResource("RectangleShape2D_wall_v")
 
 [node name="YSortNodes" type="Node2D" parent="."]
 y_sort_enabled = true
 
 [node name="DoorBack" parent="YSortNodes" instance=ExtResource("5_interact")]
-position = Vector2(-104, -16)
+position = Vector2(-176, -32)
 prompt_message = "Masuk Kamar Kos"
 
 [node name="Sprite2D" type="Sprite2D" parent="YSortNodes/DoorBack"]
-position = Vector2(0, -8)
-texture = ExtResource("6_urban")
+position = Vector2(0, -32)
+texture = ExtResource("6_interiors")
 region_enabled = true
-region_rect = Rect2(208, 160, 16, 16)
+region_rect = Rect2(224, 256, 32, 64)
 
 [node name="CollisionShape2D" parent="YSortNodes/DoorBack" index="0"]
-position = Vector2(0, 4)
+position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_npc")
 
 [node name="BuWatiNPC" parent="YSortNodes" instance=ExtResource("5_interact")]
-position = Vector2(-40, 0)
+position = Vector2(-84, 4)
 prompt_message = "Bicara: Bu Wati"
 
-[node name="Sprite2D" type="Sprite2D" parent="YSortNodes/BuWatiNPC"]
-position = Vector2(0, -8)
-texture = ExtResource("6_urban")
-region_enabled = true
-region_rect = Rect2(384, 112, 16, 16)
+[node name="ShadowSprite" type="Sprite2D" parent="YSortNodes/BuWatiNPC"]
+modulate = Color(0, 0, 0, 0.35)
+position = Vector2(0, -2)
+scale = Vector2(0.055, 0.025)
+texture = ExtResource("11_light")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="YSortNodes/BuWatiNPC"]
+sprite_frames = SubResource("SpriteFrames_bu_wati")
+animation = &"idle_down"
+autoplay = "idle_down"
+offset = Vector2(0, -24)
 
 [node name="CollisionShape2D" parent="YSortNodes/BuWatiNPC" index="0"]
-position = Vector2(0, -4)
+position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_npc")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="YSortNodes/BuWatiNPC"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="YSortNodes/BuWatiNPC/StaticBody2D"]
-position = Vector2(0, -4)
+position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_npc_solid")
 
 [node name="WarkopGerobak" parent="YSortNodes" instance=ExtResource("5_interact")]
-position = Vector2(88, 0)
+position = Vector2(116, 12)
 prompt_message = "Warkop Cak Man"
 
-[node name="StallSprite" type="Sprite2D" parent="YSortNodes/WarkopGerobak"]
-position = Vector2(0, -12)
-texture = ExtResource("6_urban")
-region_enabled = true
-region_rect = Rect2(80, 128, 48, 32)
+[node name="ShadowSprite" type="Sprite2D" parent="YSortNodes/WarkopGerobak"]
+modulate = Color(0, 0, 0, 0.32)
+position = Vector2(4, -6)
+scale = Vector2(0.28, 0.08)
+texture = ExtResource("11_light")
 
-[node name="CratesSprite" type="Sprite2D" parent="YSortNodes/WarkopGerobak"]
-position = Vector2(-36, -4)
-texture = ExtResource("6_urban")
+[node name="RacksSprite" type="Sprite2D" parent="YSortNodes/WarkopGerobak"]
+position = Vector2(-48, -14)
+offset = Vector2(0, -36)
+texture = ExtResource("6_interiors")
 region_enabled = true
-region_rect = Rect2(96, 160, 32, 16)
+region_rect = Rect2(320, 2176, 64, 96)
 
-[node name="CakManSprite" type="Sprite2D" parent="YSortNodes/WarkopGerobak"]
-position = Vector2(0, -24)
-texture = ExtResource("6_urban")
+[node name="CoolerSprite" type="Sprite2D" parent="YSortNodes/WarkopGerobak"]
+position = Vector2(56, -14)
+offset = Vector2(0, -36)
+texture = ExtResource("7_props")
 region_enabled = true
-region_rect = Rect2(384, 160, 16, 16)
+region_rect = Rect2(64, 736, 64, 96)
+
+[node name="CakManSprite" type="AnimatedSprite2D" parent="YSortNodes/WarkopGerobak"]
+position = Vector2(4, -12)
+sprite_frames = SubResource("SpriteFrames_cak_man")
+animation = &"idle_down"
+autoplay = "idle_down"
+offset = Vector2(0, -24)
+
+[node name="CounterSprite" type="Sprite2D" parent="YSortNodes/WarkopGerobak"]
+position = Vector2(4, 2)
+offset = Vector2(0, -24)
+texture = ExtResource("6_interiors")
+region_enabled = true
+region_rect = Rect2(224, 416, 96, 64)
 
 [node name="CollisionShape2D" parent="YSortNodes/WarkopGerobak" index="0"]
-position = Vector2(0, -4)
+position = Vector2(4, -8)
 shape = SubResource("RectangleShape2D_warkop")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="YSortNodes/WarkopGerobak"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="YSortNodes/WarkopGerobak/StaticBody2D"]
-position = Vector2(0, -6)
+position = Vector2(4, -10)
 shape = SubResource("RectangleShape2D_warkop_solid")
 
 [node name="LampuWarkop" type="PointLight2D" parent="YSortNodes/WarkopGerobak"]
-position = Vector2(0, -16)
-color = Color(1, 0.78, 0.38, 1)
-energy = 0.28
-texture = ExtResource("7_light_cookie")
-texture_scale = 0.3
+position = Vector2(4, -28)
+color = Color(1, 0.8, 0.4, 1)
+energy = 0.35
+texture = ExtResource("11_light")
+texture_scale = 0.65
 
 [node name="SteamKopi" type="CPUParticles2D" parent="YSortNodes/WarkopGerobak"]
-position = Vector2(-8, -16)
-amount = 6
-lifetime = 1.4
+position = Vector2(-12, -24)
+amount = 8
+lifetime = 1.6
 direction = Vector2(0, -1)
 spread = 20.0
-gravity = Vector2(0, -6)
-initial_velocity_min = 6.0
-initial_velocity_max = 12.0
+gravity = Vector2(0, -8)
+initial_velocity_min = 8.0
+initial_velocity_max = 15.0
+scale_amount_min = 1.5
+scale_amount_max = 2.5
 color_ramp = SubResource("Gradient_steam")
 
 [node name="StreetProps" type="Node2D" parent="YSortNodes"]
+y_sort_enabled = true
 
-[node name="JemuranGang" type="Sprite2D" parent="YSortNodes/StreetProps"]
-position = Vector2(-136, -4)
-texture = ExtResource("6_urban")
+[node name="TreeLeft" type="Sprite2D" parent="YSortNodes/StreetProps"]
+position = Vector2(-264, -8)
+offset = Vector2(0, -42)
+texture = ExtResource("8_exterior")
 region_enabled = true
-region_rect = Rect2(0, 128, 48, 32)
+region_rect = Rect2(0, 0, 96, 96)
 
-[node name="LampPostLeft" type="Sprite2D" parent="YSortNodes/StreetProps"]
-position = Vector2(-72, -12)
-texture = ExtResource("6_urban")
-region_enabled = true
-region_rect = Rect2(32, 96, 16, 32)
+[node name="TreeLeftShadow" type="Sprite2D" parent="YSortNodes/StreetProps/TreeLeft"]
+show_behind_parent = true
+modulate = Color(0, 0, 0, 0.32)
+position = Vector2(0, -4)
+scale = Vector2(0.18, 0.07)
+texture = ExtResource("11_light")
 
 [node name="TreeRight" type="Sprite2D" parent="YSortNodes/StreetProps"]
-position = Vector2(136, -12)
-texture = ExtResource("6_urban")
+position = Vector2(256, -8)
+offset = Vector2(0, -42)
+texture = ExtResource("8_exterior")
 region_enabled = true
-region_rect = Rect2(256, 128, 16, 32)
+region_rect = Rect2(288, 0, 96, 96)
 
-[node name="LampuJalan" type="PointLight2D" parent="YSortNodes"]
-position = Vector2(-72, -20)
-color = Color(1, 0.82, 0.45, 1)
-energy = 0.25
-texture = ExtResource("7_light_cookie")
-texture_scale = 0.32
+[node name="TreeRightShadow" type="Sprite2D" parent="YSortNodes/StreetProps/TreeRight"]
+show_behind_parent = true
+modulate = Color(0, 0, 0, 0.32)
+position = Vector2(0, -4)
+scale = Vector2(0.18, 0.07)
+texture = ExtResource("11_light")
+
+[node name="BenchGang" type="Sprite2D" parent="YSortNodes/StreetProps"]
+position = Vector2(-16, -12)
+offset = Vector2(0, -14)
+texture = ExtResource("6_interiors")
+region_enabled = true
+region_rect = Rect2(128, 992, 64, 32)
+
+[node name="BenchShadow" type="Sprite2D" parent="YSortNodes/StreetProps/BenchGang"]
+show_behind_parent = true
+modulate = Color(0, 0, 0, 0.3)
+position = Vector2(0, -4)
+scale = Vector2(0.13, 0.045)
+texture = ExtResource("11_light")
+
+[node name="BushLeft" type="Sprite2D" parent="YSortNodes/StreetProps"]
+position = Vector2(-132, -24)
+offset = Vector2(0, -14)
+texture = ExtResource("8_exterior")
+region_enabled = true
+region_rect = Rect2(64, 576, 64, 32)
+
+[node name="KardusGang" type="Sprite2D" parent="YSortNodes/StreetProps"]
+position = Vector2(208, 6)
+offset = Vector2(0, -24)
+texture = ExtResource("6_interiors")
+region_enabled = true
+region_rect = Rect2(320, 1920, 32, 64)
+
+[node name="LampuJalanKiri" type="PointLight2D" parent="YSortNodes"]
+position = Vector2(-140, -48)
+color = Color(1, 0.84, 0.48, 1)
+energy = 0.32
+texture = ExtResource("11_light")
+texture_scale = 0.65
+
+[node name="LampuJalanKanan" type="PointLight2D" parent="YSortNodes"]
+position = Vector2(208, -48)
+color = Color(1, 0.84, 0.48, 1)
+energy = 0.3
+texture = ExtResource("11_light")
+texture_scale = 0.65
 
 [node name="Player" parent="YSortNodes" instance=ExtResource("2_player")]
-position = Vector2(-104, 8)
+position = Vector2(-176, 16)
 
 [node name="Camera2D" type="Camera2D" parent="YSortNodes/Player"]
-limit_left = -160
-limit_top = -90
-limit_right = 160
-limit_bottom = 90
+zoom = Vector2(2, 2)
+limit_left = -320
+limit_top = -160
+limit_right = 320
+limit_bottom = 128
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
+
+[node name="LeafParticles" type="CPUParticles2D" parent="."]
+position = Vector2(0, -40)
+amount = 16
+lifetime = 5.0
+emission_shape = 3
+emission_rect_extents = Vector2(300, 90)
+direction = Vector2(-1, 0.6)
+spread = 35.0
+gravity = Vector2(-4, 6)
+initial_velocity_min = 6.0
+initial_velocity_max = 14.0
+scale_amount_min = 2.0
+scale_amount_max = 3.5
+color_ramp = SubResource("Gradient_leaves")
 
 [node name="HUD" parent="." instance=ExtResource("3_hud")]
 

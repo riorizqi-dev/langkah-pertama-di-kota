@@ -1,9 +1,9 @@
 extends Node2D
 
-## Scene Gang Depan Kosan & Warkop Cak Man (Langkah 3 & 4)
-## Dibangun menggunakan TileMapLayer dengan tileset Kenney Urban 16x16 asli.
+## Scene Gang Depan Kosan & Warkop Cak Man (32x32 Shaded Modern Exteriors & Interiors)
+## Dibangun menggunakan TileMapLayer 32x32 dengan modern_room_builder_32x32.png + karakter 32x48 beranimasi.
 
-const URBAN_TILES_PATH: String = "res://assets/tilesets/kenney_urban_16x16.png"
+const ROOM_BUILDER_PATH: String = "res://assets/tilesets/modern_room_builder_32x32.png"
 
 @onready var street_tile_map: TileMapLayer = $StreetTileMap
 @onready var canvas_modulate: CanvasModulate = $CanvasModulateSore
@@ -20,14 +20,14 @@ func _on_time_changed(_day: int, _phase: String) -> void:
 
 func _build_street_tilemap() -> void:
 	var ts := TileSet.new()
-	ts.tile_size = Vector2i(16, 16)
+	ts.tile_size = Vector2i(32, 32)
 	var src := TileSetAtlasSource.new()
-	src.texture = load(URBAN_TILES_PATH)
-	src.texture_region_size = Vector2i(16, 16)
+	src.texture = load(ROOM_BUILDER_PATH)
+	src.texture_region_size = Vector2i(32, 32)
 	ts.add_source(src, 0)
 	
-	for tx in range(27):
-		for ty in range(18):
+	for tx in range(17):
+		for ty in range(23):
 			src.create_tile(Vector2i(tx, ty))
 			
 	street_tile_map.tile_set = ts
@@ -35,50 +35,36 @@ func _build_street_tilemap() -> void:
 	# Langit / Latar atas gang (y = -6..-5)
 	for x in range(-11, 11):
 		for y in range(-6, -4):
-			street_tile_map.set_cell(Vector2i(x, y), 0, Vector2i(9, 1))
+			street_tile_map.set_cell(Vector2i(x, y), 0, Vector2i(12, 0))
 			
-	var deco_layer := TileMapLayer.new()
-	deco_layer.tile_set = ts
-	street_tile_map.add_child(deco_layer)
-	
-	# Bangunan Kos Bu Wati (kiri: x = -11..-2, y = -5..-2) - Bata Merah
+	# Bangunan Kos Bu Wati (kiri: x = -11..-2, y = -3..-2) - Dinding Bata Merah 32x32
 	for x in range(-11, -1):
-		street_tile_map.set_cell(Vector2i(x, -5), 0, Vector2i(18, 0))
-		street_tile_map.set_cell(Vector2i(x, -4), 0, Vector2i(18, 2))
-		street_tile_map.set_cell(Vector2i(x, -3), 0, Vector2i(18, 2))
-		street_tile_map.set_cell(Vector2i(x, -2), 0, Vector2i(18, 3))
-	deco_layer.set_cell(Vector2i(-9, -3), 0, Vector2i(11, 13))
-	deco_layer.set_cell(Vector2i(-5, -3), 0, Vector2i(11, 13))
-	deco_layer.set_cell(Vector2i(-3, -3), 0, Vector2i(11, 13))
-	
-	# Bangunan Ruko & Warung (kanan: x = -1..10, y = -5..-2) - Bata Cokelat
-	for x in range(-1, 11):
-		street_tile_map.set_cell(Vector2i(x, -5), 0, Vector2i(18, 4))
-		street_tile_map.set_cell(Vector2i(x, -4), 0, Vector2i(18, 6))
-		street_tile_map.set_cell(Vector2i(x, -3), 0, Vector2i(18, 6))
-		street_tile_map.set_cell(Vector2i(x, -2), 0, Vector2i(18, 7))
-	deco_layer.set_cell(Vector2i(1, -3), 0, Vector2i(12, 13))
-	deco_layer.set_cell(Vector2i(4, -3), 0, Vector2i(12, 13))
-	deco_layer.set_cell(Vector2i(8, -3), 0, Vector2i(12, 13))
-	deco_layer.set_cell(Vector2i(2, -2), 0, Vector2i(14, 10))
-	
-	# Trotoar Gang Kosan (y = -1..1)
-	for x in range(-11, 11):
-		street_tile_map.set_cell(Vector2i(x, -1), 0, Vector2i(9, 3))
-		street_tile_map.set_cell(Vector2i(x, 0), 0, Vector2i(9, 4))
-		street_tile_map.set_cell(Vector2i(x, 1), 0, Vector2i(9, 5))
+		street_tile_map.set_cell(Vector2i(x, -4), 0, Vector2i(12, 0))
+		street_tile_map.set_cell(Vector2i(x, -3), 0, Vector2i(5, 15))
+		street_tile_map.set_cell(Vector2i(x, -2), 0, Vector2i(8, 16))
 		
-	# Jalan Aspal Kota & Zebra Cross (y = 2..5)
+	# Bangunan Ruko & Warkop Cak Man (kanan: x = -1..10, y = -3..-2) - Dinding Ruko Modern 32x32
+	for x in range(-1, 11):
+		street_tile_map.set_cell(Vector2i(x, -4), 0, Vector2i(12, 0))
+		street_tile_map.set_cell(Vector2i(x, -3), 0, Vector2i(5, 17))
+		street_tile_map.set_cell(Vector2i(x, -2), 0, Vector2i(8, 18))
+		
+	# Trotoar Beton & Teras Kosan/Warkop (y = -1..0)
 	for x in range(-11, 11):
-		for y in range(2, 6):
-			if x == -2 or x == -1:
-				street_tile_map.set_cell(Vector2i(x, y), 0, Vector2i(0, 16))
-			elif y == 2:
-				street_tile_map.set_cell(Vector2i(x, y), 0, Vector2i(1, 15))
-			elif y == 5:
-				street_tile_map.set_cell(Vector2i(x, y), 0, Vector2i(1, 17))
+		for y in range(-1, 1):
+			if (x >= -6 and x <= -5 and y == -1) or (x >= 2 and x <= 5 and y == -1):
+				# Teras keramik terakota di depan pintu kos & warkop
+				street_tile_map.set_cell(Vector2i(x, y), 0, Vector2i(11 + (abs(x) % 2), 5))
 			else:
-				street_tile_map.set_cell(Vector2i(x, y), 0, Vector2i(1, 16))
+				var sw_col: int = 11 + (abs(x + y) % 2)
+				street_tile_map.set_cell(Vector2i(x, y), 0, Vector2i(sw_col, 11))
+				
+	# Jalan Aspal Kota (y = 1..4)
+	for x in range(-11, 11):
+		for y in range(1, 5):
+			var rd_col: int = 14 + (abs(x) % 2)
+			var rd_row: int = 11 + (abs(y) % 2)
+			street_tile_map.set_cell(Vector2i(x, y), 0, Vector2i(rd_col, rd_row))
 
 func _update_lighting_by_time() -> void:
 	match GameState.get_current_phase_name():
@@ -87,9 +73,9 @@ func _update_lighting_by_time() -> void:
 		"Siang":
 			canvas_modulate.color = Color(1.0, 0.98, 0.95, 1.0)
 		"Sore":
-			canvas_modulate.color = Color(0.88, 0.76, 0.72, 1.0)
+			canvas_modulate.color = Color(0.9, 0.78, 0.72, 1.0)
 		"Malam":
-			canvas_modulate.color = Color(0.48, 0.52, 0.72, 1.0)
+			canvas_modulate.color = Color(0.5, 0.54, 0.74, 1.0)
 
 func _on_bu_wati_interacted() -> void:
 	if not GameState.get_flag("has_talked_to_bu_wati"):

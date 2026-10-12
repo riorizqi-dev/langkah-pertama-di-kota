@@ -1,220 +1,286 @@
-[gd_scene load_steps=16 format=3 uid="uid://dpv1t7k64700n"]
+[gd_scene load_steps=19 format=3 uid="uid://dpv1t7k64700n"]
 
 [ext_resource type="Script" path="res://scripts/characters/room_kost.gd" id="1_room"]
 [ext_resource type="PackedScene" uid="uid://bvyqk58s1p0pl" path="res://scenes/characters/player.tscn" id="2_player"]
 [ext_resource type="PackedScene" uid="uid://cxupw3pvh3r7v" path="res://scenes/ui/hud.tscn" id="3_hud"]
 [ext_resource type="PackedScene" uid="uid://bvyg75m4f128q" path="res://scenes/ui/dialogue_box.tscn" id="4_dlg"]
 [ext_resource type="PackedScene" uid="uid://cih8w0k0y01q" path="res://scenes/ui/interactable_area.tscn" id="5_interact"]
-[ext_resource type="Texture2D" path="res://assets/tilesets/kenney_urban_16x16.png" id="6_urban"]
-[ext_resource type="Texture2D" path="res://assets/tilesets/kenney_indoor_16x16.png" id="7_indoor"]
+[ext_resource type="Texture2D" path="res://assets/tilesets/modern_interiors_32x32.png" id="6_interiors"]
+[ext_resource type="Texture2D" path="res://assets/tilesets/modern_props_32x32.png" id="7_props"]
 [ext_resource type="Texture2D" path="res://assets/sprites/props/light_cookie.png" id="8_light"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_h"]
-size = Vector2(192, 16)
+size = Vector2(360, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_v"]
-size = Vector2(16, 144)
+size = Vector2(24, 240)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bed_interact"]
-size = Vector2(26, 38)
+size = Vector2(68, 86)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bed_solid"]
-size = Vector2(16, 28)
+size = Vector2(54, 68)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_prop_interact"]
-size = Vector2(26, 26)
+size = Vector2(64, 52)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_prop_solid"]
-size = Vector2(16, 14)
+size = Vector2(52, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_small_interact"]
+size = Vector2(44, 44)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_small_solid"]
+size = Vector2(26, 22)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
-size = Vector2(24, 24)
+size = Vector2(44, 38)
+
+[sub_resource type="Gradient" id="Gradient_dust"]
+colors = PackedColorArray(1, 0.95, 0.78, 0.55, 1, 0.92, 0.7, 0)
 
 [node name="RoomKost" type="Node2D"]
 script = ExtResource("1_room")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.94, 0.91, 0.86, 1)
+color = Color(0.95, 0.92, 0.88, 1)
 
 [node name="BackgroundLayer" type="TileMapLayer" parent="."]
 
 [node name="RoomTileMap" type="TileMapLayer" parent="."]
 
+[node name="WallDecor" type="Node2D" parent="."]
+
+[node name="WindowCurtain" type="Sprite2D" parent="WallDecor"]
+position = Vector2(-96, -96)
+texture = ExtResource("6_interiors")
+region_enabled = true
+region_rect = Rect2(128, 768, 96, 64)
+
+[node name="WallKipasAC" type="Sprite2D" parent="WallDecor"]
+position = Vector2(56, -100)
+texture = ExtResource("6_interiors")
+region_enabled = true
+region_rect = Rect2(320, 2144, 64, 32)
+
+[node name="FloorRug" type="Sprite2D" parent="WallDecor"]
+position = Vector2(0, 24)
+texture = ExtResource("6_interiors")
+region_enabled = true
+region_rect = Rect2(0, 1344, 96, 64)
+
 [node name="RoomLight" type="PointLight2D" parent="."]
-position = Vector2(0, 0)
-color = Color(1, 0.9, 0.7, 1)
-energy = 0.22
+position = Vector2(0, 8)
+color = Color(1, 0.9, 0.72, 1)
+energy = 0.25
 texture = ExtResource("8_light")
-texture_scale = 0.45
+texture_scale = 0.85
+
+[node name="WindowSunLight" type="PointLight2D" parent="."]
+position = Vector2(-96, -56)
+color = Color(1, 0.95, 0.82, 1)
+energy = 0.3
+texture = ExtResource("8_light")
+texture_scale = 0.55
 
 [node name="StaticBody2D_Walls" type="StaticBody2D" parent="."]
 
 [node name="WallTop" type="CollisionShape2D" parent="StaticBody2D_Walls"]
-position = Vector2(0, -40)
+position = Vector2(0, -72)
 shape = SubResource("RectangleShape2D_wall_h")
 
 [node name="WallBottom" type="CollisionShape2D" parent="StaticBody2D_Walls"]
-position = Vector2(0, 72)
+position = Vector2(0, 136)
 shape = SubResource("RectangleShape2D_wall_h")
 
 [node name="WallLeft" type="CollisionShape2D" parent="StaticBody2D_Walls"]
-position = Vector2(-88, 16)
+position = Vector2(-172, 32)
 shape = SubResource("RectangleShape2D_wall_v")
 
 [node name="WallRight" type="CollisionShape2D" parent="StaticBody2D_Walls"]
-position = Vector2(88, 16)
+position = Vector2(172, 32)
 shape = SubResource("RectangleShape2D_wall_v")
 
 [node name="DoorInteractable" parent="." instance=ExtResource("5_interact")]
-position = Vector2(0, -32)
+position = Vector2(0, -64)
 prompt_message = "Keluar Kos"
 
 [node name="Sprite2D" type="Sprite2D" parent="DoorInteractable"]
-position = Vector2(0, -8)
-texture = ExtResource("6_urban")
+position = Vector2(0, -32)
+texture = ExtResource("6_interiors")
 region_enabled = true
-region_rect = Rect2(208, 160, 16, 16)
+region_rect = Rect2(224, 256, 32, 64)
 
 [node name="CollisionShape2D" parent="DoorInteractable" index="0"]
-position = Vector2(0, 4)
+position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_door")
 
 [node name="YSortNodes" type="Node2D" parent="."]
 y_sort_enabled = true
 
 [node name="BedInteractable" parent="YSortNodes" instance=ExtResource("5_interact")]
-position = Vector2(-56, -8)
+position = Vector2(-112, 8)
 prompt_message = "Tidur / Istirahat"
 
-[node name="RugSprite" type="Sprite2D" parent="YSortNodes/BedInteractable"]
-position = Vector2(16, 0)
-texture = ExtResource("7_indoor")
-region_enabled = true
-region_rect = Rect2(323, 255, 16, 16)
+[node name="ShadowSprite" type="Sprite2D" parent="YSortNodes/BedInteractable"]
+modulate = Color(0, 0, 0, 0.32)
+position = Vector2(0, -16)
+scale = Vector2(0.14, 0.14)
+texture = ExtResource("8_light")
 
-[node name="BedTopSprite" type="Sprite2D" parent="YSortNodes/BedInteractable"]
-position = Vector2(0, -8)
-texture = ExtResource("7_indoor")
+[node name="BedSprite" type="Sprite2D" parent="YSortNodes/BedInteractable"]
+offset = Vector2(0, -20)
+texture = ExtResource("6_interiors")
 region_enabled = true
-region_rect = Rect2(136, 102, 16, 16)
-
-[node name="BedBottomSprite" type="Sprite2D" parent="YSortNodes/BedInteractable"]
-position = Vector2(0, 8)
-texture = ExtResource("7_indoor")
-region_enabled = true
-region_rect = Rect2(136, 136, 16, 16)
+region_rect = Rect2(160, 1472, 64, 64)
 
 [node name="CollisionShape2D" parent="YSortNodes/BedInteractable" index="0"]
-position = Vector2(0, 0)
+position = Vector2(0, -18)
 shape = SubResource("RectangleShape2D_bed_interact")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="YSortNodes/BedInteractable"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="YSortNodes/BedInteractable/StaticBody2D"]
-position = Vector2(0, 0)
+position = Vector2(0, -18)
 shape = SubResource("RectangleShape2D_bed_solid")
 
 [node name="LemariInteractable" parent="YSortNodes" instance=ExtResource("5_interact")]
-position = Vector2(52, -18)
+position = Vector2(112, -38)
 prompt_message = "Buka Lemari"
 
-[node name="SpriteLeft" type="Sprite2D" parent="YSortNodes/LemariInteractable"]
-position = Vector2(-8, -8)
-texture = ExtResource("7_indoor")
-region_enabled = true
-region_rect = Rect2(85, 221, 16, 16)
+[node name="ShadowSprite" type="Sprite2D" parent="YSortNodes/LemariInteractable"]
+modulate = Color(0, 0, 0, 0.32)
+position = Vector2(0, -4)
+scale = Vector2(0.13, 0.05)
+texture = ExtResource("8_light")
 
-[node name="SpriteRight" type="Sprite2D" parent="YSortNodes/LemariInteractable"]
-position = Vector2(8, -8)
-texture = ExtResource("7_indoor")
+[node name="WardrobeSprite" type="Sprite2D" parent="YSortNodes/LemariInteractable"]
+offset = Vector2(0, -38)
+texture = ExtResource("6_interiors")
 region_enabled = true
-region_rect = Rect2(102, 221, 16, 16)
+region_rect = Rect2(224, 1536, 64, 96)
 
 [node name="CollisionShape2D" parent="YSortNodes/LemariInteractable" index="0"]
-position = Vector2(0, -4)
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_prop_interact")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="YSortNodes/LemariInteractable"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="YSortNodes/LemariInteractable/StaticBody2D"]
-position = Vector2(0, -6)
+position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_prop_solid")
 
 [node name="FanInteractable" parent="YSortNodes" instance=ExtResource("5_interact")]
-position = Vector2(-26, -18)
-prompt_message = "Meja & Kipas"
+position = Vector2(-44, -38)
+prompt_message = "Meja & Tanaman"
+
+[node name="ShadowSprite" type="Sprite2D" parent="YSortNodes/FanInteractable"]
+modulate = Color(0, 0, 0, 0.3)
+position = Vector2(8, -4)
+scale = Vector2(0.15, 0.05)
+texture = ExtResource("8_light")
 
 [node name="DeskSprite" type="Sprite2D" parent="YSortNodes/FanInteractable"]
-position = Vector2(0, -8)
-texture = ExtResource("7_indoor")
+offset = Vector2(0, -24)
+texture = ExtResource("6_interiors")
 region_enabled = true
-region_rect = Rect2(102, 68, 16, 16)
+region_rect = Rect2(160, 1152, 64, 64)
 
 [node name="PlantSprite" type="Sprite2D" parent="YSortNodes/FanInteractable"]
-position = Vector2(0, -18)
-texture = ExtResource("7_indoor")
+position = Vector2(44, 2)
+offset = Vector2(0, -26)
+texture = ExtResource("6_interiors")
 region_enabled = true
-region_rect = Rect2(272, 0, 16, 16)
+region_rect = Rect2(352, 1440, 32, 64)
 
 [node name="CollisionShape2D" parent="YSortNodes/FanInteractable" index="0"]
-position = Vector2(0, -4)
+position = Vector2(6, -8)
 shape = SubResource("RectangleShape2D_prop_interact")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="YSortNodes/FanInteractable"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="YSortNodes/FanInteractable/StaticBody2D"]
-position = Vector2(0, -6)
+position = Vector2(6, -10)
 shape = SubResource("RectangleShape2D_prop_solid")
 
 [node name="DispenserInteractable" parent="YSortNodes" instance=ExtResource("5_interact")]
-position = Vector2(60, 20)
+position = Vector2(128, 52)
 prompt_message = "Minum Air Galon"
 
+[node name="ShadowSprite" type="Sprite2D" parent="YSortNodes/DispenserInteractable"]
+modulate = Color(0, 0, 0, 0.3)
+position = Vector2(0, -2)
+scale = Vector2(0.065, 0.035)
+texture = ExtResource("8_light")
+
 [node name="Sprite2D" type="Sprite2D" parent="YSortNodes/DispenserInteractable"]
-position = Vector2(0, -8)
-texture = ExtResource("6_urban")
+offset = Vector2(0, -26)
+texture = ExtResource("7_props")
 region_enabled = true
-region_rect = Rect2(128, 176, 16, 16)
+region_rect = Rect2(384, 480, 32, 64)
 
 [node name="CollisionShape2D" parent="YSortNodes/DispenserInteractable" index="0"]
-position = Vector2(0, -4)
-shape = SubResource("RectangleShape2D_prop_interact")
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_small_interact")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="YSortNodes/DispenserInteractable"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="YSortNodes/DispenserInteractable/StaticBody2D"]
-position = Vector2(0, -6)
-shape = SubResource("RectangleShape2D_prop_solid")
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_small_solid")
 
 [node name="JemuranKardusNode" type="StaticBody2D" parent="YSortNodes"]
-position = Vector2(-52, 36)
+position = Vector2(-112, 88)
+
+[node name="ShadowSprite" type="Sprite2D" parent="YSortNodes/JemuranKardusNode"]
+modulate = Color(0, 0, 0, 0.3)
+position = Vector2(16, -2)
+scale = Vector2(0.14, 0.045)
+texture = ExtResource("8_light")
 
 [node name="KardusSprite" type="Sprite2D" parent="YSortNodes/JemuranKardusNode"]
-position = Vector2(0, -8)
-texture = ExtResource("6_urban")
+offset = Vector2(0, -14)
+texture = ExtResource("6_interiors")
 region_enabled = true
-region_rect = Rect2(48, 160, 32, 16)
+region_rect = Rect2(32, 2144, 32, 32)
 
-[node name="JemuranSprite" type="Sprite2D" parent="YSortNodes/JemuranKardusNode"]
-position = Vector2(84, -8)
-texture = ExtResource("6_urban")
+[node name="EmberPelSprite" type="Sprite2D" parent="YSortNodes/JemuranKardusNode"]
+position = Vector2(34, 2)
+offset = Vector2(0, -14)
+texture = ExtResource("6_interiors")
 region_enabled = true
-region_rect = Rect2(0, 128, 48, 32)
+region_rect = Rect2(64, 2144, 32, 32)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="YSortNodes/JemuranKardusNode"]
-position = Vector2(0, -6)
+position = Vector2(12, -10)
 shape = SubResource("RectangleShape2D_prop_solid")
 
 [node name="Player" parent="YSortNodes" instance=ExtResource("2_player")]
-position = Vector2(0, 12)
+position = Vector2(0, 20)
 
 [node name="Camera2D" type="Camera2D" parent="YSortNodes/Player"]
-limit_left = -160
-limit_top = -100
-limit_right = 160
-limit_bottom = 100
+zoom = Vector2(2, 2)
+limit_left = -260
+limit_top = -150
+limit_right = 260
+limit_bottom = 160
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
+
+[node name="DustParticles" type="CPUParticles2D" parent="."]
+position = Vector2(-30, 0)
+amount = 14
+lifetime = 4.5
+emission_shape = 3
+emission_rect_extents = Vector2(120, 70)
+direction = Vector2(1, -0.5)
+spread = 45.0
+gravity = Vector2(0, -1.5)
+initial_velocity_min = 3.0
+initial_velocity_max = 8.0
+scale_amount_min = 1.5
+scale_amount_max = 2.5
+color_ramp = SubResource("Gradient_dust")
 
 [node name="HUD" parent="." instance=ExtResource("3_hud")]
 

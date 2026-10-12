@@ -4,8 +4,8 @@ class_name Player
 ## Skrip pengontrol karakter utama Joko (Input, Gerak, & Animasi 4 Arah).
 ## Menggunakan Input.get_vector() dan AnimatedSprite2D (idle/walk 4 arah).
 
-@export var move_speed: float = 75.0
-@export var sprint_speed: float = 120.0
+@export var move_speed: float = 130.0
+@export var sprint_speed: float = 210.0
 
 @onready var interaction_ray: RayCast2D = $InteractionRay
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -71,13 +71,13 @@ func _play_animation(is_moving: bool) -> void:
 func update_interaction_ray_direction() -> void:
 	match last_dir_name:
 		"right":
-			interaction_ray.target_position = Vector2(14.0, 0.0)
+			interaction_ray.target_position = Vector2(26.0, 0.0)
 		"left":
-			interaction_ray.target_position = Vector2(-14.0, 0.0)
+			interaction_ray.target_position = Vector2(-26.0, 0.0)
 		"down":
-			interaction_ray.target_position = Vector2(0.0, 14.0)
+			interaction_ray.target_position = Vector2(0.0, 26.0)
 		"up":
-			interaction_ray.target_position = Vector2(0.0, -14.0)
+			interaction_ray.target_position = Vector2(0.0, -26.0)
 
 func register_nearby_interactable(obj: InteractableObject) -> void:
 	if not nearby_interactables.has(obj):

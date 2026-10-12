@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dcxdserqu04lu"
-path="res://.godot/imported/kenney_indoor_16x16.png-306590ac6a5cc63af41a828010438d9c.ctex"
+uid="uid://wranwc1m6hrt"
+path="res://.godot/imported/bu_wati_32x48.png-abd961a76c52300fb7210eb89bf3f0a1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tilesets/kenney_indoor_16x16.png"
-dest_files=["res://.godot/imported/kenney_indoor_16x16.png-306590ac6a5cc63af41a828010438d9c.ctex"]
+source_file="res://assets/sprites/characters/bu_wati_32x48.png"
+dest_files=["res://.godot/imported/bu_wati_32x48.png-abd961a76c52300fb7210eb89bf3f0a1.ctex"]
 
 [params]
 
