@@ -27,6 +27,12 @@ size = Vector2(16, 26)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
 size = Vector2(24, 36)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_h"]
+size = Vector2(300, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_v"]
+size = Vector2(16, 140)
+
 [node name="RoomKost" type="Node2D"]
 script = ExtResource("1_room")
 
@@ -46,8 +52,21 @@ color = Color(0.22, 0.38, 0.35, 1)
 
 [node name="StaticBody2D_Walls" type="StaticBody2D" parent="."]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D_Walls"]
-polygon = PackedVector2Array(-140, -30, 140, -30, 140, 90, -140, 90, -140, -30, -150, -40, -150, 100, 150, 100, 150, -40, -150, -40)
+[node name="WallTop" type="CollisionShape2D" parent="StaticBody2D_Walls"]
+position = Vector2(0, -30)
+shape = SubResource("RectangleShape2D_wall_h")
+
+[node name="WallBottom" type="CollisionShape2D" parent="StaticBody2D_Walls"]
+position = Vector2(0, 90)
+shape = SubResource("RectangleShape2D_wall_h")
+
+[node name="WallLeft" type="CollisionShape2D" parent="StaticBody2D_Walls"]
+position = Vector2(-140, 30)
+shape = SubResource("RectangleShape2D_wall_v")
+
+[node name="WallRight" type="CollisionShape2D" parent="StaticBody2D_Walls"]
+position = Vector2(140, 30)
+shape = SubResource("RectangleShape2D_wall_v")
 
 [node name="DoorInteractable" parent="." instance=ExtResource("5_interact")]
 position = Vector2(0, -36)
@@ -113,7 +132,7 @@ texture = ExtResource("10_box_tex")
 position = Vector2(0, 30)
 
 [node name="Camera2D" type="Camera2D" parent="YSortNodes/Player"]
-zoom = Vector2(2.5, 2.5)
+zoom = Vector2(1, 1)
 
 [node name="HUD" parent="." instance=ExtResource("3_hud")]
 
